@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop — TBX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="shop">
+
+<!-- HERO BAND -->
+<header class="pagehero">
+  <div class="crumbs"><a href="TBX.html" data-cur>Home</a> / Shop</div>
+  <h1 class="reveal in">Drop 01.</h1>
+  <p class="reveal in d1">The full collection. One heavyweight silhouette, five tonal colorways — 450 GSM brushed fleece, oversized cut, tonal cursive embroidery and the TAKE ACTION back hit.</p>
+  <div class="htools">
+    <div class="filterbar" id="filterbar">
+      <button class="on" data-filter="all" data-cur>All</button>
+      <button data-filter="light" data-cur>Light Tones</button>
+      <button data-filter="dark" data-cur>Dark Tones</button>
+    </div>
+    <span class="resultcount" id="resultcount">5 products</span>
+  </div>
+</header>
+
+<!-- GRID -->
+<section class="shopwrap pad">
+  <div class="pgrid" id="shopgrid"></div>
+</section>
+
+<script src="tbx-core.js"></script>
+<script>
+const T=window.TBX.TONES;
+const grid=document.getElementById('shopgrid');
+const TONE_GROUP={bone:'light',olive:'dark',graphite:'dark',navy:'dark',brown:'dark'};
+function render(filter){
+  const list=T.filter(t=>filter==='all'||TONE_GROUP[t.key]===filter);
+  grid.innerHTML=list.map(t=>window.TBX.renderProductCard(t)).join('');
+  document.getElementById('resultcount').textContent=list.length+(list.length===1?' product':' products');
+  window.tbxObserveReveals();
+}
+render('all');
+document.getElementById('filterbar').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#filterbar button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  render(b.dataset.filter);
+});
+</script>
+</body>
+</html>

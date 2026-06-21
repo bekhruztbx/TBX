@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product — TBX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="shop" data-dark-nav>
+
+<!-- PRODUCT DETAIL -->
+<section class="pdp" data-scope>
+  <div class="crumbs"><a href="TBX.html" data-cur>Home</a> / <a href="shop.html" data-cur>Shop</a> / <span id="crumbName">Product</span></div>
+  <div class="pdpgrid">
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="gthumbs" id="gthumbs"></div>
+      <div class="gmain" id="gmain"><span class="gtag" id="gtag">FRONT</span></div>
+    </div>
+    <!-- INFO -->
+    <div class="pdpinfo">
+      <div class="ptone" id="ptone">01 — Natural Sand</div>
+      <h1 id="pname">Bone</h1>
+      <div class="pdpprice"><span class="now">$69.99</span><span class="was">$79.99</span><span class="save">Save $10</span></div>
+      <div class="stars">
+        <span class="starrow" id="starRow"></span>
+        <a class="scount" href="#reviews" data-cur id="scount">4.8 · 42 reviews</a>
+      </div>
+      <p class="pdplead" id="plead"></p>
+
+      <div class="optlabel">Color <span class="ov" id="colorName">Bone</span></div>
+      <div class="colorrow" id="colorrow"></div>
+
+      <div class="optlabel">Size <span class="sizeguide" data-cur id="sizeGuide">Size guide</span></div>
+      <div class="sizerow" id="sizerow">
+        <button data-size="S" data-cur>S</button>
+        <button class="on" data-size="M" data-cur>M</button>
+        <button data-size="L" data-cur>L</button>
+      </div>
+
+      <div class="pdpbuy">
+        <div class="pdpqty">
+          <button id="qMinus" aria-label="Decrease" data-cur><svg><use href="#i-minus"/></svg></button>
+          <span class="qn" data-qn id="qn">1</span>
+          <button id="qPlus" aria-label="Increase" data-cur><svg><use href="#i-plus"/></svg></button>
+        </div>
+        <button class="pdpadd" id="addBtn" data-add="bone" data-cur>Add To Cart <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></button>
+      </div>
+
+      <div class="pdpperks">
+        <div class="pk"><svg><use href="#i-truck"/></svg> Standard shipping $5.99 · arrives in 5–7 days</div>
+        <div class="pk"><svg><use href="#i-check"/></svg> Free returns within 14 days</div>
+        <div class="pk"><svg><use href="#i-leaf"/></svg> 450 GSM brushed cotton fleece · tonal embroidery</div>
+      </div>
+
+      <div class="pdpacc">
+        <div class="ai open">
+          <button class="aq" data-cur>Description<span class="qi"></span></button>
+          <div class="aa"><p id="descText"></p></div>
+        </div>
+        <div class="ai">
+          <button class="aq" data-cur>Details &amp; Fit<span class="qi"></span></button>
+          <div class="aa"><ul>
+            <li>Oversized, boxy fit with dropped shoulders</li>
+            <li>450 GSM heavyweight brushed cotton fleece</li>
+            <li>Tonal cursive chest embroidery · TAKE ACTION back hit</li>
+            <li>Ribbed cuffs and hem · unbrushed interior loopback</li>
+            <li>Model is 6'1" wearing size M</li>
+          </ul></div>
+        </div>
+        <div class="ai">
+          <button class="aq" data-cur>Shipping &amp; Returns<span class="qi"></span></button>
+          <div class="aa"><p>Orders ship within 2 business days. Standard shipping is a flat $5.99 and arrives in 5–7 business days with tracking. Unworn pieces with tags can be returned within 14 days for a full refund — returns are free. Limited-run drops may have limited exchange stock.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews pad" id="reviews">
+  <div class="eyebrow reveal">CUSTOMER REVIEWS</div>
+  <div class="rvhead reveal d1">
+    <div class="rvscore">
+      <span class="big">4.8</span>
+      <div class="sub"><span class="starrow" id="rvBigStars"></span><span id="rvCount">Based on 42 reviews</span></div>
+    </div>
+    <div></div>
+    <button class="btn" id="writeBtn" data-cur>Write a Review</button>
+  </div>
+  <div class="rvlist" id="rvlist"></div>
+
+  <!-- WRITE REVIEW -->
+  <div class="rvform reveal" id="rvform" style="display:none">
+    <h3>Write a review</h3>
+    <p class="rvsub">Share your take on this piece. Your review helps the next person take action.</p>
+    <div class="rvstars" id="rvStarsInput" aria-label="Your rating">
+      <button data-v="1" data-cur><svg><use href="#i-star"/></svg></button>
+      <button data-v="2" data-cur><svg><use href="#i-star"/></svg></button>
+      <button data-v="3" data-cur><svg><use href="#i-star"/></svg></button>
+      <button data-v="4" data-cur><svg><use href="#i-star"/></svg></button>
+      <button data-v="5" data-cur><svg><use href="#i-star"/></svg></button>
+    </div>
+    <div class="rvgrid">
+      <input type="text" id="rvName" placeholder="Your name" />
+      <input type="text" id="rvTitle" placeholder="Review title" />
+    </div>
+    <textarea id="rvText" placeholder="What did you think?"></textarea>
+    <div class="rverr" id="rvErr">Please add a rating and a few words.</div>
+    <button class="btn fill" id="rvSubmit" data-cur>Submit Review <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></button>
+  </div>
+</section>
+
+<!-- YOU MAY ALSO LIKE -->
+<section class="rail dark pad" id="ymal">
+  <div class="railhead reveal">
+    <h2>You may also like.</h2>
+    <a href="shop.html" data-cur>View all <svg><use href="#i-arr"/></svg></a>
+  </div>
+  <div class="railgrid" id="ymalGrid"></div>
+</section>
+
+<script src="tbx-core.js"></script>
+<script>
+const T=window.TBX.TONES, byKey=window.TBX.toneByKey;
+const params=new URLSearchParams(location.search);
+let key=params.get('product')||'bone';
+let tone=byKey(key)||T[0];key=tone.key;
+
+const REVIEWS={
+  bone:[
+    {n:'Marcus T.',r:5,t:'Exactly what I wanted',d:'2 weeks ago',b:'The weight on this is insane — feels like a $200 piece. Bone goes with everything and the embroidery is subtle and clean.',size:'L'},
+    {n:'Dana R.',r:5,t:'Best hoodie I own',d:'1 month ago',b:'Oversized but not sloppy. Washed it three times already and it only got softer. Took my own advice and sized down.',size:'M'},
+    {n:'Priya K.',r:4,t:'Beautiful, runs big',d:'1 month ago',b:'Gorgeous tone and quality. It is genuinely oversized so size down if you want it closer to the body.',size:'S'}
+  ],
+  olive:[
+    {n:'Jon V.',r:5,t:'Olive is the move',d:'3 weeks ago',b:'The cream piping detail is so clean in person. Heavyweight and warm without being stiff.',size:'L'},
+    {n:'Sam W.',r:5,t:'Perfect fall color',d:'1 month ago',b:'Muted green that goes with denim or black. Embroidery is tasteful. Shipping was fast.',size:'M'}
+  ],
+  graphite:[
+    {n:'Alex P.',r:5,t:'Everyday staple',d:'2 weeks ago',b:'I reach for this one every day. The washed grey is perfect and the fit is unmatched.',size:'M'},
+    {n:'Noah B.',r:4,t:'Great, wanted heavier',d:'1 month ago',b:'Love the color and cut. Already heavy but I would have taken even heavier. Still a 4.',size:'L'}
+  ],
+  navy:[
+    {n:'Eli M.',r:5,t:'Cream hit is clean',d:'1 week ago',b:'The TAKE ACTION back in cream on this navy is so sharp. Understated and premium.',size:'M'},
+    {n:'Tara S.',r:5,t:'Obsessed',d:'3 weeks ago',b:'Deep indigo, perfect weight, perfect drop shoulder. Buying another colorway.',size:'S'}
+  ],
+  brown:[
+    {n:'Chris L.',r:5,t:'Standout tone',d:'2 weeks ago',b:'Espresso is the one. Warm, rich, and the quality is unreal for the price.',size:'L'},
+    {n:'Mina A.',r:5,t:'So good',d:'1 month ago',b:'The brown is even better in person. Cozy and heavy. Highly recommend sizing down one.',size:'M'}
+  ]
+};
+function starsHTML(r,total){total=total||5;let s='';for(let i=1;i<=total;i++)s+=`<svg><use href="#i-${i<=r?'star':'star-o'}"/></svg>`;return s;}
+
+/* ===== RENDER PDP ===== */
+document.title=tone.name+' — TBX';
+document.getElementById('crumbName').textContent=tone.name;
+document.getElementById('ptone').textContent=tone.code;
+document.getElementById('pname').textContent=tone.name;
+document.getElementById('colorName').textContent=tone.name;
+document.getElementById('plead').textContent=tone.desc;
+document.getElementById('descText').textContent=tone.desc+' Cut from 450 GSM brushed cotton fleece with a boxy, oversized silhouette and dropped shoulders. Finished with tonal cursive chest embroidery and the signature TAKE ACTION back hit — stitched, never printed.';
+document.getElementById('addBtn').setAttribute('data-add',tone.key);
+document.getElementById('starRow').innerHTML=starsHTML(5);
+document.getElementById('rvBigStars').innerHTML=starsHTML(5);
+
+/* gallery */
+const imgs=[{src:tone.front,tag:'FRONT'},{src:tone.back,tag:'BACK'},{src:tone.tight,tag:'DETAIL'}];
+const gmain=document.getElementById('gmain'),gthumbs=document.getElementById('gthumbs'),gtag=document.getElementById('gtag');
+imgs.forEach((im,i)=>{const el=document.createElement('img');el.src=im.src;el.alt=tone.name+' '+im.tag;if(i===0)el.classList.add('on');gmain.appendChild(el);});
+gthumbs.innerHTML=imgs.map((im,i)=>`<img class="gthumb${i===0?' on':''}" src="${im.src}" alt="${im.tag}" data-i="${i}" data-cur />`).join('');
+function showImg(i){gmain.querySelectorAll('img').forEach((el,j)=>el.classList.toggle('on',j===i));document.querySelectorAll('.gthumb').forEach((el,j)=>el.classList.toggle('on',j===i));gtag.textContent=imgs[i].tag;}
+gthumbs.addEventListener('click',e=>{const th=e.target.closest('.gthumb');if(th)showImg(+th.dataset.i);});
+
+/* color swatches → switch product */
+document.getElementById('colorrow').innerHTML=T.map(t=>`<a href="product.html?product=${t.key}" class="${t.key===key?'on':''}" style="background:${t.hex}" aria-label="${t.name}" title="${t.name}" data-cur></a>`).join('');
+
+/* qty */
+let qn=1;const qnEl=document.getElementById('qn');
+document.getElementById('qPlus').addEventListener('click',()=>{qn++;qnEl.textContent=qn;});
+document.getElementById('qMinus').addEventListener('click',()=>{if(qn>1){qn--;qnEl.textContent=qn;}});
+document.getElementById('sizeGuide').addEventListener('click',()=>window.TBX.showToast('S · M · L — fits oversized, size down for a closer cut'));
+
+/* ===== REVIEWS ===== */
+const rev=REVIEWS[key]||REVIEWS.bone;
+document.getElementById('rvCount').textContent='Based on '+rev.length+' verified reviews';
+document.getElementById('scount').textContent='4.8 · '+rev.length+' reviews';
+function renderReviews(){
+  document.getElementById('rvlist').innerHTML=rev.map(r=>`
+    <div class="rv">
+      <div class="rvwho"><b>${r.n}</b><span class="vf"><svg><use href="#i-check"/></svg> Verified buyer</span><div class="rvdate">${r.d} · Size ${r.size}</div></div>
+      <div class="rvbody"><span class="starrow">${starsHTML(r.r)}</span><h4>${r.t}</h4><p>${r.b}</p></div>
+    </div>`).join('');
+}
+renderReviews();
+
+/* write review */
+const rvform=document.getElementById('rvform');
+document.getElementById('writeBtn').addEventListener('click',()=>{rvform.style.display='block';rvform.classList.add('in');rvform.scrollIntoView({behavior:'smooth',block:'center'});});
+let rating=0;const starsInput=document.getElementById('rvStarsInput');
+starsInput.addEventListener('mouseover',e=>{const b=e.target.closest('button');if(!b)return;const v=+b.dataset.v;starsInput.querySelectorAll('button').forEach(x=>x.classList.toggle('hov',+x.dataset.v<=v));});
+starsInput.addEventListener('mouseout',()=>starsInput.querySelectorAll('button').forEach(x=>x.classList.remove('hov')));
+starsInput.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;rating=+b.dataset.v;starsInput.querySelectorAll('button').forEach(x=>x.classList.toggle('on',+x.dataset.v<=rating));});
+document.getElementById('rvSubmit').addEventListener('click',()=>{
+  const name=document.getElementById('rvName').value.trim(),title=document.getElementById('rvTitle').value.trim(),text=document.getElementById('rvText').value.trim();
+  if(!rating||!text||!name){document.getElementById('rvErr').classList.add('show');return;}
+  document.getElementById('rvErr').classList.remove('show');
+  rev.unshift({n:name,r:rating,t:title||'Great piece',d:'Just now',b:text,size:'M'});
+  renderReviews();
+  document.getElementById('rvName').value='';document.getElementById('rvTitle').value='';document.getElementById('rvText').value='';
+  rating=0;starsInput.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+  rvform.style.display='none';
+  window.TBX.showToast('Thanks — your review is live');
+});
+
+/* ===== RAILS ===== */
+const others=T.filter(t=>t.key!==key);
+document.getElementById('ymalGrid').innerHTML=others.slice(0,4).map(t=>window.TBX.renderProductCard(t)).join('');
+window.tbxObserveReveals();
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — TBX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+<style>
+.cxhero{position:relative;min-height:62vh;display:flex;align-items:flex-end;overflow:hidden;padding:120px clamp(20px,4vw,52px) clamp(40px,6vh,70px)}
+.cxhero .bg{position:absolute;inset:0;z-index:0}
+.cxhero .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.cxhero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,18,14,.5) 0%,rgba(19,18,14,.2) 40%,rgba(19,18,14,.92) 100%)}
+.cxhero .inner{position:relative;z-index:2;width:100%}
+.cxhero .crumbs{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--clay);margin-bottom:18px}
+.cxhero .crumbs a{cursor:none}
+.cxhero h1{font-weight:900;font-stretch:120%;text-transform:uppercase;line-height:.86;letter-spacing:-.03em;font-size:clamp(52px,10vw,150px)}
+.cxhero p{margin-top:18px;max-width:48ch;font-size:clamp(15px,1.4vw,19px);line-height:1.55;color:var(--sand)}
+</style>
+</head>
+<body data-active="contact">
+
+<!-- HERO -->
+<header class="cxhero">
+  <div class="bg"><img src="assets/graphite-back.jpeg" alt="TBX" /></div>
+  <div class="inner">
+    <div class="crumbs"><a href="TBX.html" data-cur>Home</a> / Contact</div>
+    <h1 class="reveal in">Get in<br/>touch.</h1>
+    <p class="reveal in d1">Questions about sizing, an order, a drop, or a collaboration? The studio reads everything and answers fast.</p>
+  </div>
+</header>
+
+<!-- CONTACT FORM + INFO -->
+<section class="contactwrap pad">
+  <div class="cxgrid">
+    <!-- FORM -->
+    <form class="cxform" id="cxform" onsubmit="return false">
+      <div class="eyebrow" style="color:var(--coal)">SEND A MESSAGE</div>
+      <div class="cogrid" style="margin-bottom:14px">
+        <div class="field"><label>First name</label><input type="text" placeholder="First" data-creq /><span class="err">Required</span></div>
+        <div class="field"><label>Last name</label><input type="text" placeholder="Last" data-creq /><span class="err">Required</span></div>
+        <div class="field full"><label>Email</label><input type="email" placeholder="you@email.com" data-creq /><span class="err">Required</span></div>
+        <div class="field full"><label>Subject</label>
+          <select data-creq><option value="">Select a topic</option><option>Order question</option><option>Sizing &amp; fit</option><option>Returns &amp; exchanges</option><option>Wholesale / collab</option><option>Something else</option></select><span class="err">Required</span></div>
+        <div class="field full"><label>Message</label><textarea placeholder="How can we help?" data-creq></textarea><span class="err">Required</span></div>
+      </div>
+      <div class="checkrow on" id="cxOptin" role="checkbox" aria-checked="true" data-cur><span class="cbx"><svg><use href="#i-check"/></svg></span><span class="ctxt">Keep me posted on drops and offers</span></div>
+      <button class="btn ink lg" id="cxSubmit" data-cur style="margin-top:24px">Send Message <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></button>
+    </form>
+
+    <!-- INFO CARDS -->
+    <div class="cxinfo">
+      <div class="cxcard">
+        <div class="ch"><svg><use href="#i-mail"/></svg> Email</div>
+        <a href="mailto:studio@tbx-takeaction.com" data-cur>studio@tbx-takeaction.com</a>
+        <span>We reply within 1 business day.</span>
+      </div>
+      <div class="cxcard">
+        <div class="ch"><svg><use href="#i-phone"/></svg> Phone</div>
+        <a href="tel:+10000000000" data-cur>+1 (000) 000-0000</a>
+        <span>Mon–Fri, 9am–6pm PST.</span>
+      </div>
+      <div class="cxcard">
+        <div class="ch"><svg><use href="#i-pin"/></svg> Studio</div>
+        <p>TBX Studio<br/>Los Angeles, California</p>
+        <span>By appointment only.</span>
+      </div>
+      <div class="cxcard">
+        <div class="ch"><svg><use href="#i-ig"/></svg> Social</div>
+        <div class="cxsoc">
+          <a href="https://instagram.com/tbx.takeaction" target="_blank" rel="noopener" aria-label="Instagram" data-cur><svg><use href="#i-ig"/></svg></a>
+          <a href="https://tiktok.com/@tbx.takeaction" target="_blank" rel="noopener" aria-label="TikTok" data-cur><svg><use href="#i-tt"/></svg></a>
+          <a href="mailto:studio@tbx-takeaction.com" aria-label="Email" data-cur><svg><use href="#i-mail"/></svg></a>
+        </div>
+        <span style="margin-top:12px">@tbx.takeaction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq pad" id="faq">
+  <div class="faqgrid">
+    <div>
+      <div class="eyebrow reveal">QUESTIONS</div>
+      <h2 class="reveal d1">Before you<br/>ask.</h2>
+    </div>
+    <div class="faqlist reveal d1">
+      <div class="faqitem"><button class="faqq" data-cur>How do I track my order?<span class="qi"></span></button><div class="faqa"><p>You'll get a tracking link by email the moment your order leaves the studio — usually within 2 business days. If it hasn't arrived, email studio@tbx-takeaction.com with your order number.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>What's the fit like?<span class="qi"></span></button><div class="faqa"><p>Everything is cut oversized and boxy with dropped shoulders. If you want a closer fit, size down one. The 450 GSM brushed fleece softens with every wash.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>How much is shipping?<span class="qi"></span></button><div class="faqa"><p>Standard shipping is a flat $5.99 and arrives in 5–7 business days with tracking. Orders ship within 2 business days of being placed.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>Can I return or exchange?<span class="qi"></span></button><div class="faqa"><p>Yes — unworn pieces with tags can be returned within 14 days for a full refund, and returns are free. Exchanges depend on remaining stock since drops are limited runs.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>Do you ship internationally?<span class="qi"></span></button><div class="faqa"><p>Right now we ship within the United States. International shipping is coming with the next drop — join the newsletter to be the first to know.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>Do you do collabs or wholesale?<span class="qi"></span></button><div class="faqa"><p>We're open to the right partnerships. Use the form above with the "Wholesale / collab" subject and tell us what you have in mind.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="nlband pad">
+  <div class="eyebrow reveal" style="justify-content:center;color:var(--clay)">NEWSLETTER</div>
+  <h2 class="reveal d1">Join the list.</h2>
+  <p class="reveal d2">First access to every drop, restock alerts, and member-only colorways. No spam — just TBX.</p>
+  <form class="reveal d2" id="nlform" onsubmit="return false">
+    <input type="email" placeholder="your@email.com" id="nlemail" />
+    <button type="submit" data-cur id="nlbtn">Subscribe</button>
+  </form>
+</section>
+
+<script src="tbx-core.js"></script>
+<script>
+window.tbxObserveReveals();
+
+/* contact form validation */
+const cxOptin=document.getElementById('cxOptin');
+cxOptin.addEventListener('click',()=>{const on=cxOptin.classList.toggle('on');cxOptin.setAttribute('aria-checked',on);});
+document.getElementById('cxform').addEventListener('input',e=>{const f=e.target.closest('.field');if(f&&(e.target.value||'').trim())f.classList.remove('invalid');});
+document.getElementById('cxform').addEventListener('change',e=>{const f=e.target.closest('.field');if(f&&(e.target.value||'').trim())f.classList.remove('invalid');});
+document.getElementById('cxSubmit').addEventListener('click',()=>{
+  let first=null;
+  document.querySelectorAll('#cxform [data-creq]').forEach(inp=>{const f=inp.closest('.field');if(!inp.value.trim()){f.classList.add('invalid');if(!first)first=f;}else f.classList.remove('invalid');});
+  if(first){window.TBX.showToast('Please fill in all required fields');first.querySelector('input,select,textarea').focus();return;}
+  document.querySelectorAll('#cxform input,#cxform select,#cxform textarea').forEach(i=>i.value='');
+  window.TBX.showToast('Message sent — we will be in touch');
+});
+
+/* newsletter */
+document.getElementById('nlform').addEventListener('submit',()=>{const em=document.getElementById('nlemail');if(em.value&&em.value.includes('@')){document.getElementById('nlbtn').textContent='Subscribed ✓';em.value='';em.disabled=true;}else em.focus();});
+</script>
+</body>
+</html>

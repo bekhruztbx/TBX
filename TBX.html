@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TBX — TAKE ACTION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<style>
+/* ===== HOME-ONLY ===== */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:120px 20px 0;--mx:0;--my:0;
+  background:radial-gradient(125% 80% at 50% -8%, rgba(184,165,128,.12), transparent 52%),radial-gradient(150% 120% at 50% 48%, transparent 50%, rgba(0,0,0,.55) 100%),linear-gradient(180deg,#191710 0%,#15130E 48%,var(--ink) 100%)}
+.hero .glow{position:absolute;width:78vw;height:78vw;max-width:960px;max-height:960px;border-radius:50%;background:radial-gradient(circle,rgba(190,170,132,.34),rgba(168,153,124,.12) 38%,transparent 66%);filter:blur(26px);top:47%;left:50%;transform:translate(-50%,-50%) translate(calc(var(--mx)*22px),calc(var(--my)*18px))}
+.hero .glow2{position:absolute;width:42vw;height:42vw;max-width:560px;max-height:560px;border-radius:50%;background:radial-gradient(circle,rgba(214,196,158,.22),transparent 60%);filter:blur(34px);top:44%;left:50%;transform:translate(-50%,-50%) translate(calc(var(--mx)*34px),calc(var(--my)*26px));mix-blend-mode:screen}
+.hero .bgmark{position:absolute;left:50%;top:50%;width:min(80vw,1120px);opacity:.05;user-select:none;pointer-events:none;transform:translate(-50%,-50%) translate(calc(var(--mx)*-11px),calc(var(--my)*-9px))}
+.hero .toplabel{position:relative;z-index:3;font-family:var(--mono);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--clay);margin-bottom:clamp(18px,3vh,38px);opacity:0;transform:translateY(14px);white-space:nowrap}
+.hero.in .toplabel{animation:fadeUp .9s var(--ease) .15s forwards}
+.hwrap{position:relative;z-index:3;text-align:center;width:100%;will-change:transform;transform:translate(calc(var(--mx)*13px),calc(var(--my)*10px))}
+.hline{display:block;font-weight:900;font-stretch:125%;letter-spacing:-.03em;line-height:.84;font-size:clamp(64px,18vw,280px);text-transform:uppercase;color:var(--bone)}
+.hline .ch{display:inline-block;transform:translateY(115%);opacity:0}
+.hero.in .hline .ch{animation:rise .9s var(--ease) forwards}
+@keyframes rise{to{transform:translateY(0);opacity:1}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+.hero .cta{position:relative;z-index:3;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:clamp(26px,4vh,48px);opacity:0;transform:translateY(16px)}
+.hero.in .cta{animation:fadeUp 1s var(--ease) 1s forwards}
+.hero .meta{position:absolute;bottom:30px;left:0;width:100%;display:flex;justify-content:space-between;align-items:flex-end;padding:0 clamp(20px,4vw,52px);z-index:4;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);opacity:0}
+.hero.in .meta{animation:fade 1s ease 1.2s forwards}
+@keyframes fade{to{opacity:1}}
+.scrollcue{display:flex;flex-direction:column;align-items:center;gap:8px}
+.scrollcue .bar{width:1px;height:38px;background:linear-gradient(var(--clay),transparent);position:relative;overflow:hidden}
+.scrollcue .bar::after{content:"";position:absolute;top:-38px;left:0;width:100%;height:38px;background:var(--bone);animation:runbar 1.8s var(--ease) infinite}
+@keyframes runbar{to{top:38px}}
+.ready .hline .ch{opacity:1!important;transform:none!important;animation-name:none!important}
+.ready .hero .toplabel,.ready .hero .cta,.ready .hero .meta{opacity:1!important;transform:none!important;animation-name:none!important}
+@media(max-width:620px){.hero .meta>div:not(.scrollcue){display:none}}
+@media(max-height:940px){.hero .scrollcue{display:none}}
+@media(max-height:680px){.hero .meta{display:none}}
+@media (prefers-reduced-motion:reduce){.hline .ch,.hero .toplabel,.hero .cta,.hero .meta{opacity:1!important;transform:none!important;animation:none!important}.reveal{opacity:1!important;transform:none!important}.mani .big .ln i{transform:none!important}.mani .sig{opacity:.92!important}}
+
+.shop{background:var(--bone);color:var(--ink)}
+.shop .eyebrow{color:var(--coal)}.shop .eyebrow::before{background:var(--coal)}
+.shophead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:clamp(40px,6vh,72px)}
+.shophead h2{font-weight:900;font-stretch:115%;text-transform:uppercase;line-height:.88;letter-spacing:-.02em;font-size:clamp(40px,6.4vw,96px)}
+.shophead p{max-width:34ch;font-size:clamp(15px,1.3vw,18px);line-height:1.55;color:var(--coal)}
+.shopmore{display:flex;justify-content:center;margin-top:clamp(40px,6vh,68px)}
+
+.colors{background:var(--ink)}
+.cgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(34px,5vw,84px);align-items:center}
+@media(max-width:920px){.cgrid{grid-template-columns:1fr;gap:40px}}
+.cstage{position:relative;aspect-ratio:4/5;background:var(--char);overflow:hidden}
+.cstage::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 120px rgba(0,0,0,.4);pointer-events:none;z-index:2}
+.cstage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s var(--ease),transform 1s var(--ease)}
+.cstage img.on{opacity:1;transform:scale(1)}
+.cstage .toggle{position:absolute;left:16px;bottom:16px;z-index:3;display:flex;border:1px solid var(--line);background:rgba(19,18,14,.55);backdrop-filter:blur(8px)}
+.cstage .toggle button{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bone);background:transparent;border:0;padding:9px 15px;cursor:none;opacity:.55;transition:.3s}
+.cstage .toggle button.on{opacity:1;background:var(--bone);color:var(--ink)}
+.cstage .idx{position:absolute;right:16px;top:16px;z-index:3;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--bone);opacity:.7}
+.cpanel .ce{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.cpanel .ce::before{content:"";width:30px;height:1px;background:var(--clay)}
+.cpanel h2{font-weight:900;font-stretch:115%;text-transform:uppercase;line-height:.9;letter-spacing:-.02em;font-size:clamp(44px,5.6vw,84px)}
+.cpanel .ccode{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--concrete);margin-top:10px}
+.cpanel .cdesc{font-size:clamp(15px,1.3vw,18px);line-height:1.55;color:var(--sand);max-width:42ch;margin-top:18px}
+.cprice{display:flex;align-items:center;gap:14px;margin-top:24px}
+.cprice .now{font-weight:800;font-size:30px;font-stretch:110%}
+.cprice .was{font-family:var(--mono);font-size:16px;color:var(--concrete);text-decoration:line-through}
+.cprice .save{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--clay);border:1px solid var(--clay);padding:4px 9px}
+.swrow{display:flex;gap:14px;margin:28px 0 30px;flex-wrap:wrap}
+.swrow button{position:relative;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);cursor:none;transition:transform .3s var(--ease);padding:0}
+.swrow button::after{content:"";position:absolute;inset:-5px;border:1px solid transparent;border-radius:50%;transition:border-color .3s}
+.swrow button:hover{transform:scale(1.08)}
+.swrow button.on::after{border-color:var(--clay)}
+.cbtns{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:480px){.cbtns .btn{flex:1}}
+
+.mani{background:var(--ink);text-align:center;overflow:hidden}
+.mani .big{font-weight:900;font-stretch:125%;text-transform:uppercase;line-height:.85;letter-spacing:-.03em;font-size:clamp(56px,15vw,230px)}
+.mani .big .ln{display:block;overflow:hidden}
+.mani .big .ln i{display:inline-block;font-style:normal;transform:translateY(110%);transition:transform 1s var(--ease)}
+.mani.in .big .ln i{transform:none}
+.mani.in .big .ln:nth-child(2) i{transition-delay:.12s}
+.mani .sig{margin:42px auto 0;max-width:330px;opacity:0;transition:opacity 1.2s ease .5s}
+.mani.in .sig{opacity:.92}
+.mani .sig img{width:100%}
+.mani .sub{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--clay)}
+
+.drop{background:var(--bone);color:var(--ink)}
+.dropwrap{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+@media(max-width:860px){.dropwrap{grid-template-columns:1fr;gap:36px}}
+.drop h2{font-weight:900;font-stretch:120%;text-transform:uppercase;line-height:.86;letter-spacing:-.02em;font-size:clamp(44px,7vw,108px)}
+.drop p{margin-top:18px;font-size:clamp(16px,1.4vw,20px);line-height:1.5;max-width:38ch;color:var(--coal)}
+.dform{display:flex;border:1px solid var(--ink);margin-top:30px;max-width:460px}
+.dform input{flex:1;border:0;background:transparent;padding:18px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);outline:none}
+.dform input::placeholder{color:var(--concrete)}
+.dform button{background:var(--ink);color:var(--bone);border:0;padding:0 26px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:none;transition:.3s}
+.dform button:hover{background:var(--clay);color:var(--ink)}
+.note{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--concrete)}
+.dropart{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--coal)}
+.dropart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.dropart:hover img{transform:scale(1.05)}
+.dropart .tag{position:absolute;left:16px;bottom:16px;z-index:2;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:var(--bone);color:var(--ink);padding:8px 13px}
+
+@media(max-width:600px){
+  .hero{min-height:100svh;justify-content:center;padding:116px 20px 52px}
+  .hwrap{transform:none}
+  .hero .toplabel{font-size:10.5px;letter-spacing:.2em;margin:0 0 38px;white-space:nowrap}
+  .hline{font-size:clamp(54px,16.5vw,96px);line-height:.88}
+  .hero .glow,.hero .glow2{top:50%}
+  .hero .bgmark{display:none}
+  .hwrap::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;max-width:300px;aspect-ratio:761/252;background:url(assets/logo-bone.png) center/contain no-repeat;opacity:.08;z-index:-1;pointer-events:none}
+  .hero .cta{flex-direction:column;width:100%;max-width:330px;margin:46px auto 0;gap:12px}
+  .hero .cta .btn{width:100%;justify-content:center;padding:13px 22px}
+  .hero .meta{display:none}
+}
+@media(max-width:380px){.hline{font-size:15vw}.hero .toplabel{font-size:9.5px;letter-spacing:.16em;margin-bottom:34px}}
+</style>
+</head>
+<body data-active="home">
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <img class="bgmark" src="assets/logo-bone.png" alt="" aria-hidden="true" />
+  <span class="toplabel">Drop 01 — Five Tones</span>
+  <h1 class="hwrap" aria-label="Take Action">
+    <span class="hline" data-split>TAKE</span>
+    <span class="hline" data-split>ACTION</span>
+  </h1>
+  <div class="cta">
+    <a href="shop.html" class="btn fill" data-cur>Shop The Drop <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></a>
+    <a href="#mani" class="btn" data-cur>Our Story</a>
+  </div>
+  <div class="meta">
+    <div>EST. 2026 — / — STREETWEAR<br/>OVERSIZED ESSENTIALS</div>
+    <div class="scrollcue"><span class="mono">SCROLL</span><span class="bar"></span></div>
+    <div style="text-align:right">450 GSM FLEECE<br/>BONE · OLIVE · GRAPHITE · NAVY · BROWN</div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marq" id="marq" aria-hidden="true"></div>
+
+<!-- SHOP PREVIEW -->
+<section class="shop pad" id="shop">
+  <div class="eyebrow reveal">DROP 01 / THE COLLECTION</div>
+  <div class="shophead">
+    <h2 class="reveal">Choose<br/>your tone.</h2>
+    <p class="reveal d1">One silhouette. Five colorways. 450 GSM brushed fleece with tonal cursive embroidery and the TAKE ACTION back hit — built oversized, made to be lived in.</p>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+  <div class="shopmore reveal"><a href="shop.html" class="btn ink lg" data-cur>View Full Collection <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></a></div>
+</section>
+
+<!-- COLORWAYS -->
+<section class="colors pad" id="colors">
+  <div class="cgrid">
+    <div class="cstage reveal" id="cstage">
+      <img class="on" id="cimg" src="assets/bone-front.jpeg" alt="TBX hoodie" />
+      <span class="idx" id="cidx">01 / 05</span>
+      <div class="toggle">
+        <button class="on" data-side="front" data-cur>Front</button>
+        <button data-side="back" data-cur>Back</button>
+      </div>
+    </div>
+    <div class="cpanel reveal d1">
+      <div class="ce">Select your tone</div>
+      <h2 id="cname">Bone</h2>
+      <div class="ccode" id="ccode">01 — Natural Sand</div>
+      <p class="cdesc" id="cdesc">Soft natural sand with tonal cursive embroidery. The quietest, most versatile tone in the drop.</p>
+      <div class="cprice"><span class="now">$69.99</span><span class="was">$79.99</span><span class="save">Save $10</span></div>
+      <div class="swrow" id="swrow"></div>
+      <div class="cbtns">
+        <a class="btn fill" id="cview" href="product.html?product=bone" data-cur>View Product <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></a>
+        <a href="shop.html" class="btn" data-cur>Shop All</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="mani pad" id="mani">
+  <p class="big"><span class="ln"><i>TAKE</i></span><span class="ln"><i>ACTION</i></span></p>
+  <div class="sig"><img src="assets/signature-bone.png" alt="signature" /></div>
+  <p class="sub">Wear the intent.</p>
+</section>
+
+<!-- CONNECT -->
+<section class="connect pad" id="connect">
+  <div class="eyebrow reveal" style="justify-content:center;color:var(--clay)">STAY IN THE LOOP</div>
+  <h2 class="reveal d1">Let's connect.</h2>
+  <p class="reveal d2">Follow the build, catch every restock, and reach the studio directly. We answer every message.</p>
+  <div class="sociallinks reveal d3">
+    <a class="sclink" href="https://instagram.com/tbx.takeaction" target="_blank" rel="noopener" data-cur><svg><use href="#i-ig"/></svg><span class="t"><b>Instagram</b><span>@tbx.takeaction</span></span></a>
+    <a class="sclink" href="https://tiktok.com/@tbx.takeaction" target="_blank" rel="noopener" data-cur><svg><use href="#i-tt"/></svg><span class="t"><b>TikTok</b><span>@tbx.takeaction</span></span></a>
+    <a class="sclink" href="contact.html" data-cur><svg><use href="#i-mail"/></svg><span class="t"><b>Contact</b><span>Reach the studio</span></span></a>
+  </div>
+</section>
+
+<!-- DROP / CTA -->
+<section class="drop pad" id="drop">
+  <div class="dropwrap">
+    <div>
+      <div class="eyebrow reveal" style="color:#26241F">NEXT FROM TBX</div>
+      <h2 class="reveal d1">Don't miss<br/>the next drop.</h2>
+      <p class="reveal d2">Drop 02 — the Signature Tee. Oversized, heavyweight, hand-script front. Join the list for early access and member-only colorways before it lands.</p>
+      <form class="dform reveal d3" id="dform" onsubmit="return false">
+        <input type="email" placeholder="your@email.com" id="demail" required />
+        <button type="submit" data-cur id="dsub">NOTIFY ME</button>
+      </form>
+      <p class="note reveal d3" id="dnote">No spam. Just drops.</p>
+    </div>
+    <div class="dropart reveal d2" data-cur>
+      <img src="assets/tee-navy.png" alt="TBX Signature Tee — Drop 02" />
+      <span class="tag">DROP 02 — SIGNATURE TEE</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq pad" id="faq">
+  <div class="faqgrid">
+    <div>
+      <div class="eyebrow reveal">SUPPORT / FAQ</div>
+      <h2 class="reveal d1">Good to<br/>know.</h2>
+    </div>
+    <div class="faqlist reveal d1">
+      <div class="faqitem"><button class="faqq" data-cur>What's the fit like?<span class="qi"></span></button><div class="faqa"><p>Every TBX hoodie is cut oversized and boxy with dropped shoulders. If you want a closer fit, size down one. The fabric is a heavyweight 450 GSM brushed fleece that softens with every wash.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>When does my order ship?<span class="qi"></span></button><div class="faqa"><p>Orders are packed and shipped within 2 business days. Standard shipping is $5.99 and arrives in 5–7 business days. You'll get a tracking link by email the moment it leaves the studio.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>What's your return policy?<span class="qi"></span></button><div class="faqa"><p>Unworn pieces with tags can be returned within 14 days for a full refund. Drops are limited runs, so exchanges depend on remaining stock — reach out fast and we'll sort you out.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>How do I care for it?<span class="qi"></span></button><div class="faqa"><p>Machine wash cold, inside out, with like colors. Hang or lay flat to dry to preserve the embroidery and the oversized cut. Skip the dryer and it'll outlast everything else in your rotation.</p></div></div>
+      <div class="faqitem"><button class="faqq" data-cur>Will sold-out tones restock?<span class="qi"></span></button><div class="faqa"><p>Rarely in the same form. TBX works in limited drops — when a tone is gone, it's usually gone. Join the newsletter or follow @tbx.takeaction for first access to the next release.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<script src="tbx-core.js"></script>
+<script>
+/* ===== HOME PAGE SCRIPT ===== */
+const T=window.TBX.TONES;
+
+/* product preview grid */
+document.getElementById('pgrid').innerHTML=T.map(t=>window.TBX.renderProductCard(t)).join('');
+window.tbxObserveReveals();
+
+/* split text */
+document.querySelectorAll('[data-split]').forEach(el=>{const t=el.textContent;el.textContent='';[...t].forEach((c,i)=>{const s=document.createElement('span');s.className='ch';s.textContent=c;s.style.animationDelay=(0.4+i*0.05)+'s';el.appendChild(s);});});
+requestAnimationFrame(()=>document.querySelector('.hero').classList.add('in'));
+setTimeout(()=>document.documentElement.classList.add('ready'),2500);
+
+/* hero parallax */
+const heroEl=document.getElementById('top');
+if(heroEl&&!matchMedia('(prefers-reduced-motion:reduce)').matches&&matchMedia('(hover:hover)').matches){
+  let tx=0,ty=0,px=0,py=0,active=false;
+  addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;active=true;});
+  (function pl(){px+=(tx-px)*.06;py+=(ty-py)*.06;if(active){heroEl.style.setProperty('--mx',px.toFixed(4));heroEl.style.setProperty('--my',py.toFixed(4));}requestAnimationFrame(pl);})();
+}
+
+/* manifesto reveal */
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.4});
+document.querySelectorAll('.mani').forEach(el=>io2.observe(el));
+
+/* colorways selector */
+const cimg=document.getElementById('cimg'),cname=document.getElementById('cname'),ccode=document.getElementById('ccode'),
+  cdesc=document.getElementById('cdesc'),cidx=document.getElementById('cidx'),swrow=document.getElementById('swrow'),cview=document.getElementById('cview');
+let curTone=0,curSide='front';
+swrow.innerHTML=T.map((t,i)=>`<button class="${i===0?'on':''}" style="background:${t.hex}" data-i="${i}" aria-label="${t.name}" data-cur></button>`).join('');
+function swapImg(){const t=T[curTone];cimg.classList.remove('on');setTimeout(()=>{cimg.src=t[curSide];cimg.alt=t.name+' hoodie '+curSide;requestAnimationFrame(()=>cimg.classList.add('on'));},120);}
+function setSide(side){curSide=side;document.querySelectorAll('.cstage .toggle button').forEach(b=>b.classList.toggle('on',b.dataset.side===side));swapImg();}
+function selTone(i){curTone=i;const t=T[i];document.querySelectorAll('#swrow button').forEach((b,j)=>b.classList.toggle('on',j===i));
+  cname.textContent=t.name;ccode.textContent=t.code;cdesc.textContent=t.desc;cidx.textContent='0'+(i+1)+' / 05';cview.href='product.html?product='+t.key;swapImg();}
+swrow.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>selTone(+b.dataset.i)));
+document.querySelectorAll('.cstage .toggle button').forEach(b=>b.addEventListener('click',()=>setSide(b.dataset.side)));
+
+/* drop newsletter */
+document.getElementById('dform').addEventListener('submit',()=>{const em=document.getElementById('demail');if(em.value&&em.value.includes('@')){document.getElementById('dsub').textContent='ON THE LIST ✓';document.getElementById('dnote').textContent="You're in. Watch your inbox for Drop 02.";em.value='';em.disabled=true;}else em.focus();});
+</script>
+</body>
+</html>
