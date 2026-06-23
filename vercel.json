@@ -3,6 +3,9 @@
     { "source": "/", "destination": "/TBX.html" },
     { "source": "/shop", "destination": "/shop.html" },
     { "source": "/product", "destination": "/product.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/account", "destination": "/account.html" },
+    { "source": "/account/dashboard", "destination": "/account-dashboard.html" },
+    { "source": "/account/profile", "destination": "/account-profile.html" }
   ]
 }

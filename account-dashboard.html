@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Account — TBX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="account" data-solid-nav>
+
+<div class="ac-layout pad">
+
+  <!-- SIDEBAR -->
+  <aside class="ac-side">
+    <div class="ac-avatar"><svg><use href="#i-user"/></svg></div>
+    <div class="ac-name" id="dashGreeting">Hello.</div>
+    <div class="ac-email mono" id="dashEmail"></div>
+
+    <nav class="ac-nav">
+      <a href="account-dashboard.html" class="ac-link active" data-cur>
+        <svg><use href="#i-grid"/></svg> Dashboard
+      </a>
+      <a href="account-dashboard.html#orders" class="ac-link" data-cur>
+        <svg><use href="#i-bag"/></svg> Orders
+      </a>
+      <a href="account-profile.html" class="ac-link" data-cur>
+        <svg><use href="#i-user"/></svg> Profile
+      </a>
+      <a href="shop.html" class="ac-link" data-cur>
+        <svg><use href="#i-arr"/></svg> Continue Shopping
+      </a>
+      <a href="#" class="ac-link ac-logout" data-logout data-cur>
+        <svg><use href="#i-close"/></svg> Sign Out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="ac-main">
+
+    <!-- STATS -->
+    <div class="ac-stats">
+      <div class="ac-stat">
+        <span class="as-val" id="dashCartCount">0</span>
+        <span class="as-label mono">In Cart</span>
+      </div>
+      <div class="ac-stat">
+        <span class="as-val" id="dashWishCount">0</span>
+        <span class="as-label mono">Wishlist</span>
+      </div>
+      <div class="ac-stat">
+        <a href="shop.html" class="btn ink" data-cur style="font-size:13px;padding:14px 22px">
+          Shop Drop 01 <svg class="ar" width="14" height="14"><use href="#i-arr"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <section id="orders">
+      <div class="ac-section-head">
+        <h2 class="reveal">Orders.</h2>
+      </div>
+      <div id="ordersList"><div class="ac-loading mono">Loading orders…</div></div>
+    </section>
+
+    <!-- WISHLIST PREVIEW -->
+    <section id="wishlist" style="margin-top:56px">
+      <div class="ac-section-head">
+        <h2 class="reveal">Saved.</h2>
+        <a href="shop.html" class="ac-see-all mono reveal" data-cur>View all <svg width="14" height="14"><use href="#i-arr"/></svg></a>
+      </div>
+      <div id="wishlistGrid" class="ac-wish-grid"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="tbx-core.js"></script>
+<script src="tbx-shopify.js"></script>
+<script src="tbx-account.js"></script>
+<script>
+window.tbxObserveReveals();
+
+/* Wishlist preview */
+(function(){
+  const grid = document.getElementById('wishlistGrid');
+  const list = JSON.parse(localStorage.getItem('tbx_wishlist') || '[]');
+  if (!list.length) {
+    grid.innerHTML = '<p class="ac-empty-note">No saved items yet. <a href="shop.html" data-cur>Browse the collection</a>.</p>';
+    return;
+  }
+  const TONES = window.TBX?.TONES || [];
+  grid.innerHTML = list.slice(0, 4).map(key => {
+    const t = TONES.find(x => x.key === key);
+    if (!t) return '';
+    return `<a href="product.html?product=${t.key}" class="ac-wish-card" data-cur>
+      <img src="${t.front}" alt="${t.name}" />
+      <div class="ac-wish-info">
+        <span>${t.name}</span>
+        <span class="mono">$69.99</span>
+      </div>
+    </a>`;
+  }).join('');
+})();
+</script>
+</body>
+</html>

@@ -48,6 +48,7 @@ const ICONS=`<svg width="0" height="0" style="position:absolute" aria-hidden="tr
 <symbol id="i-grid" viewBox="0 0 24 24"><circle cx="7.5" cy="7.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16.5" cy="7.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="16.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16.5" cy="16.5" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
 <symbol id="i-quote" viewBox="0 0 24 24"><path d="M9 7H5v5h4v-1c0 2-1 3-3 3M19 7h-4v5h4v-1c0 2-1 3-3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
 <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
 </defs></svg>`;
 
 /* ---------- NAV LINKS ---------- */
@@ -65,6 +66,7 @@ const menuLinks=[
   {label:'Manifesto',sub:'The philosophy behind TBX',icon:'i-quote',href:HOME+'#mani',key:'mani'},
   {label:'Cart',sub:'Review selected pieces',icon:'i-bag',nav:'cart',key:'cart'},
   {label:'Contact',sub:'Reach the studio',icon:'i-mail',href:'contact.html',key:'contact'},
+  {label:'Account',sub:'Orders, profile & more',icon:'i-user',href:'account.html',key:'account'},
   {label:'FAQ',sub:'Shipping and returns',icon:'i-help',href:'contact.html#faq',key:'faq'}
 ];
 
@@ -79,6 +81,7 @@ function navHTML(active){
       <a href="https://instagram.com/tbx.takeaction" target="_blank" rel="noopener" aria-label="Instagram" data-cur><svg><use href="#i-ig"/></svg></a>
       <a href="https://tiktok.com/@tbx.takeaction" target="_blank" rel="noopener" aria-label="TikTok" data-cur><svg><use href="#i-tt"/></svg></a>
     </div>
+    <a href="account.html" class="nav-acct nav-account-link" data-cur aria-label="Account"><svg width="20" height="20"><use href="#i-user"/></svg></a>
     <a href="#" class="cart" id="cartBtn" data-cur>Cart<span class="cc" data-cart-count>0</span></a>
     <button class="burger" id="burger" aria-label="Open menu" data-cur><span></span><span></span><span></span></button>
   </div>
@@ -477,6 +480,18 @@ function validate(){
 }
 function openCheckout(){
   if(!cartItems.length){showToast('Your cart is empty');return;}
+  if(window.TBXShopify?.SHOPIFY_ENABLED){
+    const btn=$('#goCheckout');
+    if(btn){btn.disabled=true;btn.innerHTML='Redirecting… <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>';}
+    window.TBXShopify.shopifyGoCheckout([...cartItems]).then(co=>{
+      if(co?.webUrl){window.location.href=co.webUrl;}
+      else{if(btn){btn.disabled=false;btn.innerHTML='Checkout <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>';}_openLocalCheckout();}
+    }).catch(()=>{if(btn){btn.disabled=false;btn.innerHTML='Checkout <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>';}_openLocalCheckout();});
+    return;
+  }
+  _openLocalCheckout();
+}
+function _openLocalCheckout(){
   $('#coErr').classList.remove('show');$$('#coForm .field.invalid').forEach(f=>f.classList.remove('invalid'));
   $('#delivery').classList.remove('invalid');$('#payStack').classList.remove('invalid');
   closeDrawer();renderSummary();coWrap.style.display='';coSuccess.classList.remove('on');

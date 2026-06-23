@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Account — TBX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="account" data-solid-nav>
+
+<section class="auth-wrap pad">
+  <div class="auth-hero">
+    <div class="eyebrow reveal" style="color:var(--clay)">MY ACCOUNT</div>
+    <h1 class="reveal d1">Sign in.</h1>
+  </div>
+
+  <div class="auth-box reveal d2">
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="on" id="tabLogin" data-cur>Sign In</button>
+      <button id="tabRegister" data-cur>Create Account</button>
+    </div>
+
+    <!-- Error -->
+    <div class="auth-err" id="authErr" style="display:none"></div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" onsubmit="return false">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button class="btn ink lg full" type="submit" data-cur>
+        Sign In <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+      </button>
+      <a class="auth-forgot" href="#" data-cur onclick="return false">Forgot password?</a>
+    </form>
+
+    <!-- REGISTER (hidden) -->
+    <form id="registerForm" onsubmit="return false" style="display:none">
+      <div class="cogrid">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" id="regFirst" placeholder="First" autocomplete="given-name" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" id="regLast" placeholder="Last" autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="you@email.com" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label>Password <span style="color:var(--concrete);font-weight:400">min 6 characters</span></label>
+        <input type="password" id="regPass" placeholder="••••••••" autocomplete="new-password" />
+      </div>
+      <button class="btn ink lg full" type="submit" data-cur>
+        Create Account <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+      </button>
+      <p class="auth-fine">By creating an account you agree to our <a href="#" data-cur>Terms</a> and <a href="#" data-cur>Privacy Policy</a>.</p>
+    </form>
+  </div>
+</section>
+
+<script src="tbx-core.js"></script>
+<script src="tbx-shopify.js"></script>
+<script src="tbx-account.js"></script>
+<script>window.tbxObserveReveals();</script>
+</body>
+</html>
