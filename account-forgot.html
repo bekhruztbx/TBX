@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Forgot Password — TBX</title>
+<meta name="description" content="Reset your TBX account password." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="account" data-solid-nav>
+
+<section class="lux-wizard-wrap">
+  <div class="lux-wizard" id="forgotWizard">
+
+    <div class="lux-wizard-head reveal">
+      <div class="lux-card-eyebrow">PASSWORD RECOVERY</div>
+      <h1>Forgot Password?</h1>
+      <p>Enter your email and we'll send you a link to reset your password.</p>
+    </div>
+
+    <div class="lux-steps reveal d1">
+      <div class="seg active"><i></i></div>
+      <div class="seg"><i></i></div>
+      <div class="seg"><i></i></div>
+      <div class="seg"><i></i></div>
+    </div>
+
+    <div class="lux-panel reveal d2">
+      <div class="lux-err" id="wizErr" style="display:none"></div>
+
+      <!-- STEP 1 — email -->
+      <div class="lux-step active" data-step="1">
+        <div class="lux-field">
+          <label>Email</label>
+          <input type="email" id="fpEmail" placeholder="you@email.com" autocomplete="email" />
+          <span class="field-hint">Enter the email linked to your account.</span>
+        </div>
+        <button class="lux-btn primary" type="button" id="fpStep1Next" data-cur>
+          Send Reset Link <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 2 — check your email -->
+      <div class="lux-step" data-step="2">
+        <div class="lux-success">
+          <div class="lux-success-ring">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5 10 17l9-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2>Check your inbox.</h2>
+          <p>We sent a password reset link to <b id="fpSentEmail" style="color:var(--bone)"></b>. Click it to set a new password.</p>
+        </div>
+      </div>
+
+      <!-- STEP 3 — new password -->
+      <div class="lux-step" data-step="3">
+        <div class="lux-field">
+          <label>New Password <span style="color:var(--concrete);font-weight:400;text-transform:none">min 6 characters</span></label>
+          <input type="password" id="fpPass" placeholder="••••••••" autocomplete="new-password" />
+        </div>
+        <div class="lux-field">
+          <label>Confirm New Password</label>
+          <input type="password" id="fpPassConfirm" placeholder="••••••••" autocomplete="new-password" />
+        </div>
+        <button class="lux-btn primary" type="button" id="fpStep3Next" data-cur>
+          Reset Password <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 4 — success -->
+      <div class="lux-step" data-step="4">
+        <div class="lux-success">
+          <div class="lux-success-ring">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5 10 17l9-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2>Password Updated.</h2>
+          <p>Your password has been reset successfully. You can now sign in with your new password.</p>
+          <a href="account.html?reset=success" class="lux-btn primary" data-cur style="margin-top:8px">
+            Continue to Sign In <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lux-links reveal d3">
+      <a href="account.html" data-cur>Back to Sign In</a>
+    </div>
+  </div>
+</section>
+
+<script src="tbx-core.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="tbx-stripe.js"></script>
+<script src="tbx-shopify.js"></script>
+<script src="supabase-js.min.js"></script>
+<script src="tbx-supabase.js"></script>
+<script src="tbx-account.js"></script>
+<script>window.tbxObserveReveals();</script>
+</body>
+</html>

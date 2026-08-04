@@ -3,11 +3,17 @@
   1. shopify.com → Starter plan ($9/oy) → do'kon yarating
   2. Admin → Settings → Apps → Develop apps → "TBX Frontend" → yarating
      Permissions: unauthenticated_read_product_listings, unauthenticated_write_checkouts
-  3. Quyidagi SHOPIFY_DOMAIN va SHOPIFY_TOKEN ni to'ldiring
+  3. Quyidagi SHOPIFY_DOMAIN va SHOPIFY_STOREFRONT_TOKEN ni to'ldiring
+
+  XAVFSIZLIK: SHOPIFY_STOREFRONT_TOKEN faqat "Storefront API" tokeni bo'lishi shart —
+  bu token brauzerda ochiq turishi uchun mo'ljallangan (public, faqat mahsulot o'qish +
+  checkout yaratish huquqi bilan). HECH QACHON bu yerga "Admin API" tokenini qo'ymang —
+  Admin token butun do'konni (buyurtmalar, mijozlar, sozlamalar) to'liq boshqarish huquqini
+  beradi va faqat serverda, hech qachon client-side kodda saqlanmasligi kerak.
 ======================================================================= */
 
 const SHOPIFY_DOMAIN = 'YOUR_STORE.myshopify.com'; // masalan: tbx-takeaction.myshopify.com
-const SHOPIFY_TOKEN  = 'YOUR_STOREFRONT_ACCESS_TOKEN';
+const SHOPIFY_STOREFRONT_TOKEN = 'YOUR_STOREFRONT_ACCESS_TOKEN'; // faqat Storefront API tokeni — Admin token EMAS
 
 /* Shopify Admin → Products → har bir mahsulot → F12 Console →
    ShopifyAnalytics.meta.product.variants ni ko'ring yoki URL dagi ID dan foydalaning */
@@ -28,7 +34,7 @@ async function _gql(query, variables) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN,
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
     },
     body: JSON.stringify({ query, variables: variables || {} }),
   });

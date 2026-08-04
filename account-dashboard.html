@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>My Account — TBX</title>
+<meta name="description" content="Manage your TBX account, orders, wishlist, and addresses." />
+<meta name="robots" content="noindex,nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -12,100 +14,224 @@
 </head>
 <body data-active="account" data-solid-nav>
 
-<div class="ac-layout pad">
+<div class="lux-dash">
 
-  <!-- SIDEBAR -->
-  <aside class="ac-side">
-    <div class="ac-avatar"><svg><use href="#i-user"/></svg></div>
-    <div class="ac-name" id="dashGreeting">Hello.</div>
-    <div class="ac-email mono" id="dashEmail"></div>
-
-    <nav class="ac-nav">
-      <a href="account-dashboard.html" class="ac-link active" data-cur>
-        <svg><use href="#i-grid"/></svg> Dashboard
-      </a>
-      <a href="account-dashboard.html#orders" class="ac-link" data-cur>
-        <svg><use href="#i-bag"/></svg> Orders
-      </a>
-      <a href="account-profile.html" class="ac-link" data-cur>
-        <svg><use href="#i-user"/></svg> Profile
-      </a>
-      <a href="shop.html" class="ac-link" data-cur>
-        <svg><use href="#i-arr"/></svg> Continue Shopping
-      </a>
-      <a href="#" class="ac-link ac-logout" data-logout data-cur>
-        <svg><use href="#i-close"/></svg> Sign Out
-      </a>
-    </nav>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="ac-main">
-
-    <!-- STATS -->
-    <div class="ac-stats">
-      <div class="ac-stat">
-        <span class="as-val" id="dashCartCount">0</span>
-        <span class="as-label mono">In Cart</span>
-      </div>
-      <div class="ac-stat">
-        <span class="as-val" id="dashWishCount">0</span>
-        <span class="as-label mono">Wishlist</span>
-      </div>
-      <div class="ac-stat">
-        <a href="shop.html" class="btn ink" data-cur style="font-size:13px;padding:14px 22px">
-          Shop Drop 01 <svg class="ar" width="14" height="14"><use href="#i-arr"/></svg>
-        </a>
-      </div>
+  <div class="lux-dash-head reveal">
+    <div class="lux-dash-avatar"><svg><use href="#i-user"/></svg></div>
+    <div>
+      <h1 id="dashName">Hello.</h1>
+      <div class="lux-dash-sub" id="dashSub">Welcome back.</div>
     </div>
+  </div>
+
+  <h2 class="sr-only">Account Overview</h2>
+  <div class="lux-grid">
+
+    <!-- PROFILE -->
+    <section class="lux-dcard span-2 reveal">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-user"/></svg></div>
+      </div>
+      <h3>Personal Information</h3>
+      <p class="dc-desc">Your personal details.</p>
+      <div class="dc-rows">
+        <div class="dc-row"><span>Name</span><span id="pfNameRow">—</span></div>
+        <div class="dc-row"><span>Email</span><span id="pfEmailRow">—</span></div>
+        <div class="dc-row">
+          <span>Phone</span>
+          <span>
+            <span id="pfPhoneRow">—</span>
+            <span class="lux-badge verified" id="pfPhoneBadge" style="display:none">
+              <svg><use href="#i-check"/></svg> Verified
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="dc-foot">
+        <a href="account-profile.html" class="dc-link" data-cur>Edit Profile <svg><use href="#i-arr"/></svg></a>
+      </div>
+    </section>
+
+    <!-- ACCOUNT SETTINGS -->
+    <section class="lux-dcard reveal">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-lock"/></svg></div>
+      </div>
+      <h3>Security</h3>
+      <p class="dc-desc">Manage your password and security.</p>
+      <div class="dc-actions">
+        <a href="account-profile.html" class="lux-pill" data-cur>Change Password</a>
+        <a href="#" class="lux-pill danger" data-logout data-cur>Sign Out</a>
+      </div>
+    </section>
 
     <!-- ORDERS -->
-    <section id="orders">
-      <div class="ac-section-head">
-        <h2 class="reveal">Orders.</h2>
+    <section class="lux-dcard span-2 reveal" id="orders">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-bag"/></svg></div>
       </div>
-      <div id="ordersList"><div class="ac-loading mono">Loading orders…</div></div>
+      <h3>Order History</h3>
+      <p class="dc-desc">Your recent purchases.</p>
+      <div id="ordersList"><p class="lux-empty">Loading orders…</p></div>
     </section>
 
-    <!-- WISHLIST PREVIEW -->
-    <section id="wishlist" style="margin-top:56px">
-      <div class="ac-section-head">
-        <h2 class="reveal">Saved.</h2>
-        <a href="shop.html" class="ac-see-all mono reveal" data-cur>View all <svg width="14" height="14"><use href="#i-arr"/></svg></a>
+    <!-- WISHLIST -->
+    <section class="lux-dcard reveal">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-star"/></svg></div>
       </div>
-      <div id="wishlistGrid" class="ac-wish-grid"></div>
+      <h3>Wishlist</h3>
+      <p class="dc-desc">Items you've saved.</p>
+      <div id="wishlistList"></div>
+      <div class="dc-foot">
+        <a href="shop.html" class="dc-link" data-cur>Browse Collection <svg><use href="#i-arr"/></svg></a>
+      </div>
     </section>
 
-  </main>
+    <!-- ADDRESSES -->
+    <section class="lux-dcard reveal">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-pin"/></svg></div>
+      </div>
+      <h3>Saved Addresses</h3>
+      <p class="dc-desc">Saved shipping addresses.</p>
+      <p class="lux-empty" id="addrEmpty">No addresses saved yet.</p>
+      <div class="lux-list" id="addrList"></div>
+      <div class="dc-foot">
+        <button type="button" class="lux-pill" id="addAddrBtn" data-cur>+ Add Address</button>
+      </div>
+    </section>
+
+    <!-- PAYMENT METHODS -->
+    <section class="lux-dcard span-2 reveal">
+      <div class="dc-top">
+        <div class="dc-icon"><svg><use href="#i-card"/></svg></div>
+      </div>
+      <h3>Payment Methods</h3>
+      <p class="dc-desc">Saved cards for faster checkout. Demo only — no real charges are ever processed or stored.</p>
+      <p class="lux-empty" id="cardEmpty">No payment methods saved yet.</p>
+      <div class="lux-list" id="cardList"></div>
+      <div class="dc-foot">
+        <button type="button" class="lux-pill" id="addCardBtn" data-cur>+ Add Payment Method</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ADD ADDRESS MODAL -->
+<div class="lux-modal-scrim" id="addrModal">
+  <div class="lux-modal">
+    <div class="lux-modal-head">
+      <h3>Add Address</h3>
+      <button type="button" class="lux-modal-close" id="addrModalClose" aria-label="Close"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <form id="addrForm" onsubmit="return false">
+      <div class="lux-field">
+        <label>Label</label>
+        <input type="text" id="addrLabel" placeholder="Home, Office…" />
+      </div>
+      <div class="lux-field">
+        <label>Full Name</label>
+        <input type="text" id="addrFullName" placeholder="Full name" />
+      </div>
+      <div class="lux-field">
+        <label>Country</label>
+        <div class="lux-combo" id="addrCountryCombo">
+          <input type="text" id="addrCountryInput" class="lux-combo-input" placeholder="Search country…" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" />
+          <div class="lux-combo-list" id="addrCountryList" role="listbox"></div>
+        </div>
+      </div>
+      <div class="lux-cogrid">
+        <div class="lux-field">
+          <label>Street Address</label>
+          <input type="text" id="addrLine" placeholder="Street address" />
+        </div>
+        <div class="lux-field">
+          <label>Apartment / Unit <span style="color:var(--concrete);font-weight:400;text-transform:none">optional</span></label>
+          <input type="text" id="addrUnit" placeholder="Apt, suite…" />
+        </div>
+      </div>
+      <div class="lux-cogrid">
+        <div class="lux-field">
+          <label>City</label>
+          <input type="text" id="addrCity" placeholder="City" />
+        </div>
+        <div class="lux-field">
+          <label>State / Province</label>
+          <div class="lux-combo" id="addrStateCombo">
+            <input type="text" id="addrStateInput" class="lux-combo-input" placeholder="Select or type a state…" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" />
+            <div class="lux-combo-list" id="addrStateList" role="listbox"></div>
+          </div>
+        </div>
+      </div>
+      <div class="lux-cogrid">
+        <div class="lux-field" id="addrZipField">
+          <label>ZIP / Postal Code</label>
+          <input type="text" id="addrZip" placeholder="ZIP code" />
+          <span class="field-err" id="addrZipErr">Enter a valid postal code.</span>
+        </div>
+        <div class="lux-field">
+          <label>Phone Number</label>
+          <div class="lux-phone-row">
+            <span class="lux-phone-dial" id="addrPhoneDial">+—</span>
+            <input type="tel" id="addrPhone" placeholder="Phone number" autocomplete="tel-national" />
+          </div>
+        </div>
+      </div>
+      <button class="lux-btn primary" type="submit" data-cur>Save Address</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADD PAYMENT MODAL -->
+<div class="lux-modal-scrim" id="cardModal">
+  <div class="lux-modal">
+    <div class="lux-modal-head">
+      <h3>Add Payment Method</h3>
+      <button type="button" class="lux-modal-close" id="cardModalClose" aria-label="Close"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <form id="cardForm" onsubmit="return false">
+      <div class="lux-field" id="cardHolderField">
+        <label>Cardholder Name</label>
+        <input type="text" id="cardHolder" placeholder="Name on card" />
+        <span class="field-err">Letters and spaces only.</span>
+      </div>
+      <div class="lux-field" id="cardNumberField">
+        <label>Card Number</label>
+        <input type="text" id="cardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456" maxlength="19" />
+        <span class="field-err">Enter a valid card number.</span>
+        <span class="field-hint">Demo only — this is a UI preview and never submits to a real payment processor.</span>
+      </div>
+      <div class="lux-cogrid">
+        <div class="lux-field" id="cardExpiryField">
+          <label>Expiry (MM/YY)</label>
+          <input type="text" id="cardExpiry" inputmode="numeric" placeholder="MM/YY" maxlength="5" />
+          <span class="field-err">Use MM/YY format.</span>
+        </div>
+        <div class="lux-field" id="cardCvcField">
+          <label>CVC</label>
+          <input type="text" id="cardCvc" inputmode="numeric" placeholder="123" maxlength="4" />
+          <span class="field-err">3 or 4 digits.</span>
+        </div>
+      </div>
+      <div class="lux-field" id="cardZipField">
+        <label>Billing ZIP / Postal Code</label>
+        <input type="text" id="cardZip" placeholder="ZIP code" maxlength="10" />
+        <span class="field-err">Enter a valid postal code.</span>
+      </div>
+      <button class="lux-btn primary" type="submit" id="cardSaveBtn" data-cur disabled>Save Card</button>
+    </form>
+  </div>
 </div>
 
 <script src="tbx-core.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="tbx-stripe.js"></script>
 <script src="tbx-shopify.js"></script>
+<script src="supabase-js.min.js"></script>
+<script src="tbx-supabase.js"></script>
 <script src="tbx-account.js"></script>
-<script>
-window.tbxObserveReveals();
-
-/* Wishlist preview */
-(function(){
-  const grid = document.getElementById('wishlistGrid');
-  const list = JSON.parse(localStorage.getItem('tbx_wishlist') || '[]');
-  if (!list.length) {
-    grid.innerHTML = '<p class="ac-empty-note">No saved items yet. <a href="shop.html" data-cur>Browse the collection</a>.</p>';
-    return;
-  }
-  const TONES = window.TBX?.TONES || [];
-  grid.innerHTML = list.slice(0, 4).map(key => {
-    const t = TONES.find(x => x.key === key);
-    if (!t) return '';
-    return `<a href="product.html?product=${t.key}" class="ac-wish-card" data-cur>
-      <img src="${t.front}" alt="${t.name}" />
-      <div class="ac-wish-info">
-        <span>${t.name}</span>
-        <span class="mono">$69.99</span>
-      </div>
-    </a>`;
-  }).join('');
-})();
-</script>
+<script>window.tbxObserveReveals();</script>
 </body>
 </html>

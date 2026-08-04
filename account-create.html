@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Account — TBX</title>
+<meta name="description" content="Create your TBX account for faster checkout and order tracking." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tbx-core.css" />
+<link rel="stylesheet" href="tbx-pages.css" />
+</head>
+<body data-active="account" data-solid-nav>
+
+<section class="lux-wizard-wrap">
+  <div class="lux-wizard" id="createWizard">
+
+    <div class="lux-wizard-head reveal">
+      <div class="lux-card-eyebrow">NEW MEMBER</div>
+      <h1>Create Account.</h1>
+      <p>A few quick steps to set up your TBX account.</p>
+    </div>
+
+    <div class="lux-steps reveal d1">
+      <div class="seg active"><i></i></div>
+      <div class="seg"><i></i></div>
+      <div class="seg"><i></i></div>
+    </div>
+
+    <div class="lux-panel reveal d2">
+      <div class="lux-err" id="wizErr" style="display:none"></div>
+
+      <!-- STEP 1 — name -->
+      <div class="lux-step active" data-step="1">
+        <div class="lux-cogrid">
+          <div class="lux-field">
+            <label>First Name</label>
+            <input type="text" id="cwFirst" placeholder="First" autocomplete="given-name" />
+          </div>
+          <div class="lux-field">
+            <label>Last Name</label>
+            <input type="text" id="cwLast" placeholder="Last" autocomplete="family-name" />
+          </div>
+        </div>
+        <button class="lux-btn primary" type="button" id="step1Next" data-cur>
+          Continue <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 2 — email + phone + password -->
+      <div class="lux-step" data-step="2">
+        <div class="lux-field">
+          <label>Email</label>
+          <input type="email" id="cwEmail" placeholder="you@email.com" autocomplete="email" />
+        </div>
+        <div class="lux-field">
+          <label>Phone Number <span style="color:var(--concrete);font-weight:400;text-transform:none">optional</span></label>
+          <input type="tel" id="cwPhone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+        </div>
+        <div class="lux-field">
+          <label>Password <span style="color:var(--concrete);font-weight:400;text-transform:none">min 6 characters</span></label>
+          <input type="password" id="cwPass" placeholder="••••••••" autocomplete="new-password" />
+        </div>
+        <button class="lux-btn primary" type="button" id="step2Next" data-cur>
+          Create Account <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+        </button>
+        <div class="lux-step-foot">
+          <button class="lux-step-back" type="button" id="step2Back" data-cur>
+            <svg width="14" height="14"><use href="#i-arr"/></svg> Back
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3 — check your email -->
+      <div class="lux-step" data-step="3">
+        <div class="lux-success">
+          <div class="lux-success-ring">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5 10 17l9-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2>Check your inbox.</h2>
+          <p>We sent a confirmation link to <b id="cwSentEmail" style="color:var(--bone)"></b>. Click it to activate your account, then sign in.</p>
+          <button class="lux-btn secondary" type="button" id="cwResendEmail" data-cur style="width:auto;padding:14px 26px;margin-top:4px">Resend Email</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lux-links reveal d3">
+      <a href="account.html" data-cur>Already have an account? Sign In</a>
+    </div>
+  </div>
+</section>
+
+<div class="lux-loading-overlay" id="loadingOverlay">
+  <div class="lux-spinner"></div>
+  <div class="lux-loading-text">Creating your account…</div>
+</div>
+
+<script src="tbx-core.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="tbx-stripe.js"></script>
+<script src="tbx-shopify.js"></script>
+<script src="supabase-js.min.js"></script>
+<script src="tbx-supabase.js"></script>
+<script src="tbx-account.js"></script>
+<script>window.tbxObserveReveals();</script>
+</body>
+</html>

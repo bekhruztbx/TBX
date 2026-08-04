@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /account.html
+Disallow: /account-create.html
+Disallow: /account-dashboard.html
+Disallow: /account-forgot.html
+Disallow: /account-profile.html
+
+Sitemap: https://www.tbxtakeaction.com/sitemap.xml

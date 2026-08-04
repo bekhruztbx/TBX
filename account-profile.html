@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Profile — TBX</title>
+<meta name="description" content="Manage your TBX profile, password, and preferences." />
+<meta name="robots" content="noindex,nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -12,152 +14,109 @@
 </head>
 <body data-active="account" data-solid-nav>
 
-<div class="ac-layout pad">
+<section class="lux-profile-wrap">
+  <a href="account-dashboard.html" class="lux-profile-back reveal" data-cur>
+    <svg width="14" height="14"><use href="#i-arr"/></svg> Back to Dashboard
+  </a>
 
-  <!-- SIDEBAR -->
-  <aside class="ac-side">
-    <div class="ac-avatar"><svg><use href="#i-user"/></svg></div>
-    <div class="ac-name" id="dashGreeting">Account</div>
-    <div class="ac-email mono" id="dashEmail"></div>
-    <nav class="ac-nav">
-      <a href="account-dashboard.html" class="ac-link" data-cur>
-        <svg><use href="#i-grid"/></svg> Dashboard
-      </a>
-      <a href="account-dashboard.html#orders" class="ac-link" data-cur>
-        <svg><use href="#i-bag"/></svg> Orders
-      </a>
-      <a href="account-profile.html" class="ac-link active" data-cur>
-        <svg><use href="#i-user"/></svg> Profile
-      </a>
-      <a href="shop.html" class="ac-link" data-cur>
-        <svg><use href="#i-arr"/></svg> Continue Shopping
-      </a>
-      <a href="#" class="ac-link ac-logout" data-logout data-cur>
-        <svg><use href="#i-close"/></svg> Sign Out
-      </a>
-    </nav>
-  </aside>
+  <div class="lux-wizard-head reveal" style="text-align:left;margin-bottom:36px">
+    <div class="lux-card-eyebrow">ACCOUNT</div>
+    <h1 style="text-align:left">Profile.</h1>
+  </div>
 
-  <!-- MAIN -->
-  <main class="ac-main">
+  <!-- PERSONAL INFORMATION -->
+  <div class="lux-panel reveal d1" style="margin-bottom:24px">
+    <div class="lux-card-eyebrow" style="margin-bottom:24px">PERSONAL INFORMATION</div>
 
-    <div class="ac-section-head" style="margin-bottom:40px">
-      <h2>Profile.</h2>
-    </div>
+    <div class="lux-err" id="profileErr" style="display:none"></div>
+    <div class="lux-ok"  id="profileOk"  style="display:none">Profile updated.</div>
 
-    <!-- PROFILE FORM -->
-    <div class="ac-card" style="max-width:560px">
-      <div class="eyebrow" style="color:var(--clay);margin-bottom:24px">PERSONAL INFORMATION</div>
-
-      <div class="auth-err" id="profileErr" style="display:none"></div>
-      <div class="auth-ok"  id="profileOk"  style="display:none">Profile updated.</div>
-
-      <form id="profileForm" onsubmit="return false">
-        <div class="cogrid">
-          <div class="field">
-            <label>First name</label>
-            <input type="text" id="pfFirst" placeholder="First" />
-          </div>
-          <div class="field">
-            <label>Last name</label>
-            <input type="text" id="pfLast" placeholder="Last" />
-          </div>
+    <form id="profileForm" onsubmit="return false">
+      <div class="lux-cogrid">
+        <div class="lux-field">
+          <label>First Name</label>
+          <input type="text" id="pfFirst" placeholder="First" />
         </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" id="pfEmail" placeholder="you@email.com" />
+        <div class="lux-field">
+          <label>Last Name</label>
+          <input type="text" id="pfLast" placeholder="Last" />
         </div>
-        <button class="btn ink lg" type="submit" data-cur style="margin-top:8px">
-          Save Changes <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
-        </button>
-      </form>
-    </div>
-
-    <!-- CHANGE PASSWORD -->
-    <div class="ac-card" style="max-width:560px;margin-top:40px">
-      <div class="eyebrow" style="color:var(--clay);margin-bottom:24px">CHANGE PASSWORD</div>
-
-      <div class="auth-err" id="pwErr" style="display:none"></div>
-      <div class="auth-ok"  id="pwOk"  style="display:none">Password updated.</div>
-
-      <form id="pwForm" onsubmit="return false">
-        <div class="field">
-          <label>Current password</label>
-          <input type="password" id="pwCurrent" placeholder="••••••••" />
-        </div>
-        <div class="field">
-          <label>New password</label>
-          <input type="password" id="pwNew" placeholder="Min 6 characters" />
-        </div>
-        <div class="field">
-          <label>Confirm new password</label>
-          <input type="password" id="pwConfirm" placeholder="••••••••" />
-        </div>
-        <button class="btn" type="submit" data-cur style="margin-top:8px;border:1px solid var(--line)">
-          Update Password <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
-        </button>
-      </form>
-    </div>
-
-    <!-- NEWSLETTER -->
-    <div class="ac-card" style="max-width:560px;margin-top:40px">
-      <div class="eyebrow" style="color:var(--clay);margin-bottom:20px">NEWSLETTER</div>
-      <div class="checkrow on" id="nlToggle" role="checkbox" aria-checked="true" data-cur>
-        <span class="cbx"><svg><use href="#i-check"/></svg></span>
-        <span class="ctxt">First access to every drop, restock alerts, and member-only colorways.</span>
       </div>
-    </div>
+      <div class="lux-field">
+        <label>Email</label>
+        <input type="email" id="pfEmail" placeholder="you@email.com" />
+      </div>
+      <div class="lux-field">
+        <label>Phone Number</label>
+        <div style="display:flex;align-items:center;gap:12px">
+          <input type="text" id="pfPhone" readonly style="opacity:.75" />
+          <span class="lux-badge verified" id="pfPhoneBadge" style="display:none">
+            <svg><use href="#i-check"/></svg> Verified
+          </span>
+        </div>
+        <span class="field-hint">Phone numbers are set during account creation and verified via SMS.</span>
+      </div>
+      <button class="lux-btn primary" type="submit" data-cur style="width:auto;padding:16px 30px;margin-top:6px">
+        Save Changes <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+      </button>
+    </form>
+  </div>
 
-    <!-- DANGER ZONE -->
-    <div class="ac-card ac-danger" style="max-width:560px;margin-top:40px">
-      <div class="eyebrow" style="color:#8B4444;margin-bottom:16px">SIGN OUT</div>
-      <p style="color:var(--concrete);font-size:14px;margin-bottom:20px">Sign out of your TBX account on this device.</p>
-      <a href="#" class="btn" data-logout data-cur style="border:1px solid var(--line);color:var(--bone)">
-        Sign Out <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
-      </a>
-    </div>
+  <!-- CHANGE PASSWORD -->
+  <div class="lux-panel reveal d2" style="margin-bottom:24px">
+    <div class="lux-card-eyebrow" style="margin-bottom:24px">CHANGE PASSWORD</div>
 
-  </main>
-</div>
+    <div class="lux-err" id="pwErr" style="display:none"></div>
+    <div class="lux-ok"  id="pwOk"  style="display:none">Password updated.</div>
+
+    <form id="pwForm" onsubmit="return false">
+      <div class="lux-field">
+        <label>Current Password</label>
+        <input type="password" id="pwCurrent" placeholder="••••••••" />
+      </div>
+      <div class="lux-field">
+        <label>New Password</label>
+        <input type="password" id="pwNew" placeholder="Min 6 characters" />
+      </div>
+      <div class="lux-field">
+        <label>Confirm New Password</label>
+        <input type="password" id="pwConfirm" placeholder="••••••••" />
+      </div>
+      <button class="lux-btn secondary" type="submit" data-cur style="width:auto;padding:16px 30px;margin-top:6px">
+        Update Password <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="lux-panel reveal d3" style="margin-bottom:24px">
+    <div class="lux-card-eyebrow" style="margin-bottom:20px">NEWSLETTER</div>
+    <div class="checkrow on" id="nlToggle" role="checkbox" aria-checked="true" data-cur>
+      <span class="cbx"><svg><use href="#i-check"/></svg></span>
+      <span class="ctxt">First access to every drop, restock alerts, and member-only colorways.</span>
+    </div>
+  </div>
+
+  <!-- SIGN OUT -->
+  <div class="lux-panel reveal d4">
+    <div class="lux-card-eyebrow" style="color:#c88686;margin-bottom:16px">SIGN OUT</div>
+    <p style="color:var(--concrete);font-size:14px;margin-bottom:20px">Sign out of your TBX account on this device.</p>
+    <a href="#" class="lux-pill danger" data-logout data-cur>Sign Out</a>
+  </div>
+</section>
 
 <script src="tbx-core.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="tbx-stripe.js"></script>
 <script src="tbx-shopify.js"></script>
+<script src="supabase-js.min.js"></script>
+<script src="tbx-supabase.js"></script>
 <script src="tbx-account.js"></script>
 <script>
-/* Sidebar greeting */
-(function(){
-  const u = JSON.parse(localStorage.getItem('tbx_user') || 'null');
-  if (u) {
-    document.getElementById('dashGreeting').textContent = u.firstName + ' ' + u.lastName;
-    document.getElementById('dashEmail').textContent = u.email;
-  }
-})();
-
-/* Password form */
-document.getElementById('pwForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const pwErr = document.getElementById('pwErr');
-  const pwOk  = document.getElementById('pwOk');
-  pwErr.style.display = 'none'; pwOk.style.display = 'none';
-  const cur  = document.getElementById('pwCurrent').value;
-  const nw   = document.getElementById('pwNew').value;
-  const conf = document.getElementById('pwConfirm').value;
-  if (!cur || !nw) { pwErr.textContent = 'Barcha maydonlarni to\'ldiring.'; pwErr.style.display = 'block'; return; }
-  if (nw.length < 6) { pwErr.textContent = 'Yangi parol kamida 6 ta belgi bo\'lishi kerak.'; pwErr.style.display = 'block'; return; }
-  if (nw !== conf) { pwErr.textContent = 'Parollar mos emas.'; pwErr.style.display = 'block'; return; }
-  pwOk.style.display = 'block';
-  document.getElementById('pwCurrent').value = '';
-  document.getElementById('pwNew').value = '';
-  document.getElementById('pwConfirm').value = '';
+document.getElementById('nlToggle').addEventListener('click', function () {
+  const on = this.classList.toggle('on');
+  this.setAttribute('aria-checked', on);
 });
-
-/* Newsletter toggle */
-const nlToggle = document.getElementById('nlToggle');
-nlToggle.addEventListener('click', () => {
-  const on = nlToggle.classList.toggle('on');
-  nlToggle.setAttribute('aria-checked', on);
-});
-
 window.tbxObserveReveals();
 </script>
 </body>

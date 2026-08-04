@@ -22,6 +22,7 @@ const TONES=[
 const PRICE=69.99, WAS=79.99, TAX_RATE=0.08, SHIP_COST=5.99;
 const toneByKey=k=>TONES.find(t=>t.key===k);
 const money=n=>'$'+(n<0?0:n).toFixed(2);
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const US_STATES=['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
 
 /* ---------- ICONS ---------- */
@@ -135,17 +136,18 @@ function checkoutHTML(){
       <div class="cosec">
         <h3><span class="num">1</span> Contact</h3>
         <div class="cogrid">
-          <div class="field full"><label>Email</label><input type="email" placeholder="you@email.com" autocomplete="email" data-req /><span class="err">Required</span></div>
+          <div class="field"><label>Email</label><input type="email" id="coEmail" placeholder="you@email.com" autocomplete="email" data-req /><span class="err">Required</span></div>
+          <div class="field"><label>Phone</label><input type="tel" id="coPhone" placeholder="+1 (555) 000-0000" autocomplete="tel" data-req /><span class="err">Required</span></div>
         </div>
         <div class="checkrow on" id="emailOptin" role="checkbox" aria-checked="true" data-cur><span class="cbx"><svg><use href="#i-check"/></svg></span><span class="ctxt">Email me with news and offers</span></div>
       </div>
       <div class="cosec">
         <h3><span class="num">2</span> Shipping Address</h3>
         <div class="cogrid">
-          <div class="field"><label>First name</label><input type="text" placeholder="First" autocomplete="given-name" data-req /><span class="err">Required</span></div>
-          <div class="field"><label>Last name</label><input type="text" placeholder="Last" autocomplete="family-name" data-req /><span class="err">Required</span></div>
+          <div class="field"><label>First name</label><input type="text" placeholder="First" autocomplete="given-name" id="firstNameInput" data-req /><span class="err">Required</span></div>
+          <div class="field"><label>Last name</label><input type="text" placeholder="Last" autocomplete="family-name" id="lastNameInput" data-req /><span class="err">Required</span></div>
           <div class="field full"><label>Address</label><input type="text" placeholder="Street address" autocomplete="address-line1" id="addrInput" data-req /><span class="err">Required</span></div>
-          <div class="field full"><label>Apartment, suite (optional)</label><input type="text" placeholder="Apt / Suite" autocomplete="address-line2" /></div>
+          <div class="field full"><label>Apartment, suite (optional)</label><input type="text" placeholder="Apt / Suite" autocomplete="address-line2" id="aptInput" /></div>
           <div class="field full"><label>City</label><input type="text" placeholder="City" autocomplete="address-level2" id="cityInput" data-req /><span class="err">Required</span></div>
           <div class="field"><label>State</label><select data-req id="stateInput"><option value="">Select state</option>${US_STATES.map(s=>`<option>${s}</option>`).join('')}</select><span class="err">Required</span></div>
           <div class="field"><label>ZIP code</label><input type="text" placeholder="ZIP" autocomplete="postal-code" id="zipInput" data-req /><span class="err">Required</span></div>
@@ -167,30 +169,13 @@ function checkoutHTML(){
               <span class="cardlogos"><i class="cl visa">VISA</i><i class="cl mc">MC</i><i class="cl amex">AMEX</i><i class="cl disc">DISC</i><i class="cl more">+5</i></span>
             </div>
             <div class="paybody">
-              <div class="cogrid">
-                <div class="field full"><label>Card number</label><span class="inwrap"><input type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19" id="ccNum" data-req data-card /><span class="inlock" id="ccBrand"><svg><use href="#i-lock"/></svg></span></span><span class="err">Required</span></div>
-                <div class="field"><label>Expiration (MM / YY)</label><input type="text" placeholder="MM / YY" maxlength="7" id="ccExp" data-req data-card /><span class="err">Required</span></div>
-                <div class="field"><label>Security code</label><span class="inwrap"><input type="text" inputmode="numeric" placeholder="CVC" maxlength="4" data-req data-card /><span class="inlock"><svg><use href="#i-lock"/></svg></span></span><span class="err">Required</span></div>
-                <div class="field full"><label>Name on card</label><input type="text" placeholder="Full name" autocomplete="cc-name" data-req data-card /><span class="err">Required</span></div>
+              <div class="field full" id="stripeCardField">
+                <label>Card Details</label>
+                <div id="stripeCardElement" class="stripe-el"></div>
+                <span class="err" id="stripeCardErr">Enter your card details</span>
               </div>
               <div class="checkrow on" id="billSameCard" role="checkbox" aria-checked="true" data-cur><span class="cbx"><svg><use href="#i-check"/></svg></span><span class="ctxt">Use shipping address as billing address</span></div>
             </div>
-          </div>
-          <div class="payopt" data-pay="shoppay" data-cur>
-            <div class="payhead"><span class="ring"></span><span class="payname">Shop Pay</span><span class="paymeta">Pay in full or in installments</span><span class="paybrand shoppay">shop<b>Pay</b></span></div>
-            <div class="paybody"><div class="alt"><svg><use href="#i-lock"/></svg> Continue with Shop Pay to complete securely.</div></div>
-          </div>
-          <div class="payopt" data-pay="paypal" data-cur>
-            <div class="payhead"><span class="ring"></span><span class="payname">PayPal</span><span class="paybrand paypal">Pay<b>Pal</b></span></div>
-            <div class="paybody"><div class="alt"><svg><use href="#i-lock"/></svg> You'll be redirected to PayPal to complete your purchase.</div></div>
-          </div>
-          <div class="payopt" data-pay="apple" data-cur>
-            <div class="payhead"><span class="ring"></span><span class="payname">Apple Pay</span><span class="paybrand apple">&#63743;Pay</span></div>
-            <div class="paybody"><div class="alt"><svg><use href="#i-lock"/></svg> Confirm with Apple Pay on your device.</div></div>
-          </div>
-          <div class="payopt" data-pay="google" data-cur>
-            <div class="payhead"><span class="ring"></span><span class="payname">Google Pay</span><span class="paybrand gpay"><b>G</b>Pay</span></div>
-            <div class="paybody"><div class="alt"><svg><use href="#i-lock"/></svg> Confirm with Google Pay on your device.</div></div>
           </div>
         </div>
         <div class="secline"><svg><use href="#i-lock"/></svg><span>Secure encrypted checkout · 256-bit SSL protection</span></div>
@@ -203,12 +188,12 @@ function checkoutHTML(){
         </div>
         <div class="billfields" id="billFields">
           <div class="cogrid">
-            <div class="field"><label>First name</label><input type="text" placeholder="First" data-bill-req /><span class="err">Required</span></div>
-            <div class="field"><label>Last name</label><input type="text" placeholder="Last" data-bill-req /><span class="err">Required</span></div>
-            <div class="field full"><label>Address</label><input type="text" placeholder="Street address" data-bill-req /><span class="err">Required</span></div>
-            <div class="field full"><label>City</label><input type="text" placeholder="City" data-bill-req /><span class="err">Required</span></div>
-            <div class="field"><label>State</label><select data-bill-req><option value="">Select state</option>${US_STATES.map(s=>`<option>${s}</option>`).join('')}</select><span class="err">Required</span></div>
-            <div class="field"><label>ZIP code</label><input type="text" placeholder="ZIP" data-bill-req /><span class="err">Required</span></div>
+            <div class="field"><label>First name</label><input type="text" placeholder="First" id="billFirst" data-bill-req /><span class="err">Required</span></div>
+            <div class="field"><label>Last name</label><input type="text" placeholder="Last" id="billLast" data-bill-req /><span class="err">Required</span></div>
+            <div class="field full"><label>Address</label><input type="text" placeholder="Street address" id="billAddr" data-bill-req /><span class="err">Required</span></div>
+            <div class="field full"><label>City</label><input type="text" placeholder="City" id="billCity" data-bill-req /><span class="err">Required</span></div>
+            <div class="field"><label>State</label><select data-bill-req id="billState"><option value="">Select state</option>${US_STATES.map(s=>`<option>${s}</option>`).join('')}</select><span class="err">Required</span></div>
+            <div class="field"><label>ZIP code</label><input type="text" placeholder="ZIP" id="billZip" data-bill-req /><span class="err">Required</span></div>
             <div class="field full"><label>Country</label><select data-bill-req><option value="United States" selected>United States</option></select><span class="err">Required</span></div>
           </div>
         </div>
@@ -240,6 +225,10 @@ function checkoutHTML(){
     <h2>Order<br/>confirmed.</h2>
     <p>Thank you for taking action. A confirmation has been sent to your email — your TBX pieces are being prepared for shipment.</p>
     <span class="ordno" id="ordNo">ORDER #TBX-00000</span>
+    <div class="coacct" id="coAcctCta" style="display:none;max-width:38ch">
+      <p style="font-size:14px;line-height:1.55;color:var(--concrete);margin-bottom:16px">Create a TBX account to save your information for faster checkout next time.</p>
+      <a href="account-create.html" class="btn fill" data-cur>Create Account <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></a>
+    </div>
     <button class="btn ink" id="coDone" data-cur>Continue Shopping <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></button>
   </div>
 </div>
@@ -372,6 +361,18 @@ function addItem(key,size,qty){
 function changeQty(id,d){const it=cartItems.find(i=>i.id===id);if(!it)return;it.qty+=d;if(it.qty<1)cartItems=cartItems.filter(i=>i.id!==id);saveCart();updateCount();renderDrawer();renderSummary();}
 function removeItem(id){cartItems=cartItems.filter(i=>i.id!==id);saveCart();updateCount();renderDrawer();renderSummary();}
 
+/* ---------- WISHLIST ---------- */
+const WISH_KEY='tbx_wishlist';
+function getWishlist(){try{return JSON.parse(localStorage.getItem(WISH_KEY)||'[]');}catch(e){return [];}}
+function isWishlisted(key){return getWishlist().includes(key);}
+function toggleWishlist(key){
+  const list=getWishlist();
+  const on=list.includes(key);
+  const next=on?list.filter(k=>k!==key):[...list,key];
+  try{localStorage.setItem(WISH_KEY,JSON.stringify(next));}catch(e){}
+  return !on;
+}
+
 /* ---------- DRAWER ---------- */
 const drawer=$('#drawer'),scrim=$('#scrim'),drawerBody=$('#drawerBody'),menu=$('#menu'),checkout=$('#checkout'),coWrap=$('#coWrap'),coSuccess=$('#coSuccess');
 let menuOpen=false;
@@ -380,7 +381,7 @@ function renderDrawer(){
   const q=cartQty();$('#drawerQty').textContent=q+(q===1?' item':' items');
   if(!cartItems.length){drawerBody.innerHTML='<div class="cempty"><svg><use href="#i-bag"/></svg><p>Your cart is empty</p><a class="shoplink" href="shop.html" data-cur>Browse the collection</a></div>';}
   else{drawerBody.innerHTML=cartItems.map(it=>`
-    <div class="citem"><img class="cthumb" src="${it.img}" alt="${it.name}" />
+    <div class="citem"><img class="cthumb" src="${it.img}" alt="${it.name}" loading="lazy" />
       <div class="cmid"><div class="crow1"><h4>${it.name}</h4><span class="cprice">${money(it.qty*it.price)}</span></div>
         <div class="cmeta"><span class="cdot" style="background:${it.hex}"></span>Size ${it.size}</div>
         <div class="crow2"><div class="qty">
@@ -402,6 +403,15 @@ $$('[data-open-cart]').forEach(el=>el.addEventListener('click',e=>{e.preventDefa
 
 /* ---------- ADD TO CART DELEGATION ---------- */
 document.addEventListener('click',e=>{
+  const wish=e.target.closest('[data-wish]');
+  if(wish){
+    e.preventDefault();e.stopPropagation();
+    const on=toggleWishlist(wish.dataset.wish);
+    wish.classList.toggle('on',on);
+    wish.setAttribute('aria-label',(on?'Remove from':'Add to')+' wishlist');
+    const use=wish.querySelector('use');if(use)use.setAttribute('href',on?'#i-star':'#i-star-o');
+    return;
+  }
   const sb=e.target.closest('.sizes button,.sizerow button,.csizes button');
   if(sb && !sb.dataset.nostate){sb.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));sb.classList.add('on');}
   const add=e.target.closest('[data-add]');
@@ -420,7 +430,7 @@ document.addEventListener('click',e=>{
 function renderSummary(){
   const items=$('#oItems');if(!items)return;
   items.innerHTML=cartItems.map(it=>`
-    <div class="oitem"><div style="position:relative"><img class="othumb" src="${it.img}" alt="${it.name}" /><span class="oqty">${it.qty}</span></div>
+    <div class="oitem"><div style="position:relative"><img class="othumb" src="${it.img}" alt="${it.name}" loading="lazy" /><span class="oqty">${it.qty}</span></div>
     <div><div class="oname">${it.name}</div><div class="ometa">Size ${it.size}</div></div>
     <span class="olp">${money(it.qty*it.price)}</span></div>`).join('');
   const sub=cartSub(),disc=sub*discount,taxed=(sub-disc)*TAX_RATE,total=sub-disc+(cartItems.length?shipCost:0)+taxed;
@@ -430,14 +440,6 @@ function renderSummary(){
   $('#oTax').textContent=money(taxed);
   $('#oTotal').textContent=money(total);
 }
-let activePay='card';
-$('#payStack').addEventListener('click',e=>{const t=e.target.closest('.payopt');if(!t)return;
-  if(e.target.closest('input,.checkrow'))return;
-  $$('.payopt').forEach(x=>x.classList.remove('on'));t.classList.add('on');activePay=t.dataset.pay;
-  $('#payStack').classList.remove('invalid');
-  const labels={card:'Place Order',shoppay:'Continue with Shop Pay',paypal:'Pay with PayPal',apple:'Pay with Apple Pay',google:'Pay with Google Pay'};
-  $('#placeLabel').textContent=labels[activePay]||'Place Order';
-});
 // "use shipping address as billing" checkbox inside card panel mirrors billing toggle
 (function(){const cb=$('#billSameCard');if(cb)cb.addEventListener('click',()=>{const on=cb.classList.toggle('on');cb.setAttribute('aria-checked',on);
   billMode=on?'same':'diff';
@@ -455,27 +457,47 @@ $('#saveNotNow').addEventListener('click',()=>{$('#saveInfo').classList.add('dis
 // discount
 $('#codeApply').addEventListener('click',()=>{const v=$('#codeInput').value.trim().toUpperCase();if(!v)return;
   if(v==='TAKEACTION'||v==='TBX10'){discount=0.1;showToast('Code applied — 10% off');}else{discount=0;showToast('Invalid code');}renderSummary();});
-// card formatting + brand detection
-const ccNum=$('#ccNum');const ccBrand=$('#ccBrand');
-function detectBrand(n){if(/^4/.test(n))return'visa';if(/^(5[1-5]|2[2-7])/.test(n))return'mc';if(/^3[47]/.test(n))return'amex';if(/^6(011|5)/.test(n))return'disc';if(/^3(0|6|8)/.test(n))return'diners';if(/^35/.test(n))return'jcb';return'';}
-const BRANDTXT={visa:'VISA',mc:'MC',amex:'AMEX',disc:'DISC',diners:'DINERS',jcb:'JCB'};
-ccNum.addEventListener('input',()=>{let v=ccNum.value.replace(/\D/g,'').slice(0,16);ccNum.value=v.replace(/(.{4})/g,'$1 ').trim();
-  const b=detectBrand(v);if(ccBrand){if(b&&v.length>=2){ccBrand.textContent=BRANDTXT[b];ccBrand.className='inlock brand';}else{ccBrand.innerHTML='<svg><use href="#i-lock"/></svg>';ccBrand.className='inlock';}}});
-const ccExp=$('#ccExp');ccExp.addEventListener('input',()=>{let v=ccExp.value.replace(/\D/g,'').slice(0,4);if(v.length>2)v=v.slice(0,2)+' / '+v.slice(2);ccExp.value=v;});
+/* ---------- SIGNED-IN AUTOFILL ---------- */
+function autofillCheckout(){
+  const user=window.TBXAccount?.getUser?.();if(!user)return;
+  const fill=(id,val)=>{const el=$(id);if(el&&!el.value&&val)el.value=val;};
+  fill('#coEmail',user.email);fill('#coPhone',user.phone);
+  fill('#firstNameInput',user.firstName);fill('#lastNameInput',user.lastName);
+  const addrs=window.TBXAccount?.getAddresses?.()||[];const def=addrs[0];
+  if(!def)return;
+  fill('#addrInput',def.address);fill('#aptInput',def.unit);fill('#cityInput',def.city);fill('#zipInput',def.zip);
+  const matchState=(sel,name)=>{if(!sel||sel.value||!name)return;const opt=[...sel.options].find(o=>o.value.toLowerCase()===name.toLowerCase());if(opt)sel.value=opt.value;};
+  matchState($('#stateInput'),def.state);
+  // default billing mirrors the default saved address until the shopper picks a different one
+  fill('#billFirst',user.firstName);fill('#billLast',user.lastName);
+  fill('#billAddr',def.address);fill('#billCity',def.city);fill('#billZip',def.zip);
+  matchState($('#billState'),def.state);
+}
+/* ---------- STRIPE CARD ELEMENT ---------- */
+let stripeCardComplete=false;
+function mountStripeCard(){
+  if(!window.TBXStripe?.STRIPE_ENABLED)return;
+  window.TBXStripe.mountCardElement('#stripeCardElement',event=>{
+    stripeCardComplete=!!event.complete;
+    const field=$('#stripeCardField');
+    field.classList.toggle('invalid',!!event.error);
+    $('#stripeCardErr').textContent=event.error?event.error.message:'Enter your card details';
+  });
+}
 // clear errors on input
 $('#coForm').addEventListener('input',e=>{const f=e.target.closest('.field');if(f&&(e.target.value||'').trim())f.classList.remove('invalid');
   if(!$('#coForm .field.invalid'))$('#coErr').classList.remove('show');});
 $('#coForm').addEventListener('change',e=>{const f=e.target.closest('.field');if(f&&(e.target.value||'').trim())f.classList.remove('invalid');});
 function validate(){
   let first=null;
-  $$('#coForm [data-req]').forEach(inp=>{const f=inp.closest('.field');const card=inp.hasAttribute('data-card');
-    if(card&&activePay!=='card'){f.classList.remove('invalid');return;}
+  $$('#coForm [data-req]').forEach(inp=>{const f=inp.closest('.field');
     if(!inp.value.trim()){f.classList.add('invalid');if(!first)first=f;}else f.classList.remove('invalid');});
+  const cardField=$('#stripeCardField');
+  if(!stripeCardComplete){cardField.classList.add('invalid');if(!first)first=cardField;}else cardField.classList.remove('invalid');
   if(billMode==='diff'){$$('#billFields [data-bill-req]').forEach(inp=>{const f=inp.closest('.field');
     if(!inp.value.trim()){f.classList.add('invalid');if(!first)first=f;}else f.classList.remove('invalid');});}
   else $$('#billFields [data-bill-req]').forEach(inp=>inp.closest('.field').classList.remove('invalid'));
   const delSel=$('#delivery .optcard.on'),delW=$('#delivery');if(!delSel){delW.classList.add('invalid');if(!first)first=delW;}else delW.classList.remove('invalid');
-  const paySel=$('#payStack .payopt.on'),payW=$('#payStack');if(!paySel){payW.classList.add('invalid');if(!first)first=payW;}else payW.classList.remove('invalid');
   return first;
 }
 function openCheckout(){
@@ -493,23 +515,69 @@ function openCheckout(){
 }
 function _openLocalCheckout(){
   $('#coErr').classList.remove('show');$$('#coForm .field.invalid').forEach(f=>f.classList.remove('invalid'));
-  $('#delivery').classList.remove('invalid');$('#payStack').classList.remove('invalid');
+  $('#delivery').classList.remove('invalid');
+  mountStripeCard();autofillCheckout();
   closeDrawer();renderSummary();coWrap.style.display='';coSuccess.classList.remove('on');
   checkout.classList.add('open');syncLock();checkout.scrollTop=0;
 }
 function closeCheckout(){checkout.classList.remove('open');syncLock();}
 $('#goCheckout').addEventListener('click',openCheckout);
 $('#coBack').addEventListener('click',closeCheckout);
-$('#placeOrder').addEventListener('click',()=>{
+$('#placeOrder').addEventListener('click',async()=>{
   if(!cartItems.length){showToast('Your cart is empty');return;}
   const bad=validate();
   if(bad){$('#coErr').classList.add('show');showToast('Please fill in all required fields');
     const inp=bad.querySelector('input,select');const y=bad.getBoundingClientRect().top+checkout.scrollTop-110;
     checkout.scrollTo({top:Math.max(0,y),behavior:'smooth'});if(inp)setTimeout(()=>inp.focus({preventScroll:true}),450);return;}
   $('#coErr').classList.remove('show');
-  $('#ordNo').textContent='ORDER #TBX-'+Math.floor(10000+Math.random()*89999);
-  coWrap.style.display='none';coSuccess.classList.add('on');checkout.scrollTop=0;
-  cartItems=[];discount=0;saveCart();updateCount();renderDrawer();
+
+  const btn=$('#placeOrder'),label=$('#placeLabel');
+  btn.disabled=true;label.textContent='Processing...';
+
+  try{
+    if(!window.TBXStripe?.STRIPE_ENABLED)throw new Error('Payments are temporarily unavailable.');
+    const billingDetails={
+      name:`${$('#firstNameInput').value.trim()} ${$('#lastNameInput').value.trim()}`.trim(),
+      email:$('#coEmail').value.trim(),
+      phone:$('#coPhone').value.trim(),
+      address:{
+        line1:billMode==='diff'?$('#billAddr').value.trim():$('#addrInput').value.trim(),
+        city:billMode==='diff'?$('#billCity').value.trim():$('#cityInput').value.trim(),
+        state:billMode==='diff'?$('#billState').value:$('#stateInput').value,
+        postal_code:billMode==='diff'?$('#billZip').value.trim():$('#zipInput').value.trim(),
+        country:'US',
+      },
+    };
+    const {clientSecret}=await window.TBXStripe.createPaymentIntent(cartQty());
+    await window.TBXStripe.confirmCardPayment(clientSecret,billingDetails);
+
+    const orderId='TBX-'+Math.floor(10000+Math.random()*89999);
+    $('#ordNo').textContent='ORDER #'+orderId;
+    const user=window.TBXAccount?.getUser?.();
+    const cta=$('#coAcctCta');if(cta)cta.style.display=user?'none':'';
+    try{
+      const orders=JSON.parse(localStorage.getItem('tbx_orders')||'[]');
+      orders.unshift({
+        id:orderId,
+        date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
+        status:'FULFILLED',
+        total:$('#oTotal').textContent,
+        items:cartItems.map(it=>`${it.name} — Size ${it.size}`).join(', '),
+        email:user?user.email:null,
+      });
+      localStorage.setItem('tbx_orders',JSON.stringify(orders));
+    }catch(e){}
+    coWrap.style.display='none';coSuccess.classList.add('on');checkout.scrollTop=0;
+    cartItems=[];discount=0;saveCart();updateCount();renderDrawer();
+  }catch(err){
+    const field=$('#stripeCardField');
+    field.classList.add('invalid');
+    $('#stripeCardErr').textContent=err.message||'Payment failed. Please try again.';
+    const y=field.getBoundingClientRect().top+checkout.scrollTop-110;
+    checkout.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+    showToast(err.message||'Payment failed.');
+  }
+  btn.disabled=false;label.textContent='Place Order';
 });
 $('#coDone').addEventListener('click',closeCheckout);
 
@@ -559,19 +627,23 @@ const fform=$('#fform');if(fform)fform.addEventListener('submit',()=>{const em=$
 updateCount();renderDrawer();renderSummary();
 
 /* ---------- PUBLIC API ---------- */
-window.TBX={TONES,toneByKey,money,addItem,openCart:openDrawer,showToast,renderProductCard,PRICE,WAS};
+window.TBX={TONES,toneByKey,money,addItem,openCart:openDrawer,showToast,renderProductCard,PRICE,WAS,US_STATES,isWishlisted,toggleWishlist,getWishlist};
 
 /* ---------- SHARED RENDERERS ---------- */
 function renderProductCard(t,opts){
   opts=opts||{};
   const href='product.html?product='+t.key;
+  const wished=isWishlisted(t.key);
   return `<a class="pcard" href="${href}" data-cur>
     <div class="pimg">
       ${t.badge?`<span class="badge">${t.badge}</span>`:`<span class="badge">$${PRICE}</span>`}
       <span class="swatchdot" style="background:${t.hex}"></span>
-      <img class="front" src="${t.front}" alt="${t.name} hoodie front" />
-      <img class="back" src="${t.back}" alt="${t.name} hoodie back" />
-      <img class="mtight" src="${t.tight}" alt="${t.name} hoodie" />
+      <button type="button" class="wishbtn${wished?' on':''}" data-wish="${t.key}" aria-label="${wished?'Remove from':'Add to'} wishlist" data-cur>
+        <svg><use href="#${wished?'i-star':'i-star-o'}"/></svg>
+      </button>
+      <img class="front" src="${t.front}" alt="${t.name} hoodie front" loading="lazy" />
+      <img class="back" src="${t.back}" alt="${t.name} hoodie back" loading="lazy" />
+      <img class="mtight" src="${t.tight}" alt="${t.name} hoodie" loading="lazy" />
     </div>
     <div class="pbody">
       <div class="ptop"><h3>${t.name}</h3><span class="code">${t.code.split('—')[0].trim()}</span></div>

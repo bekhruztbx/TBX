@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Product — TBX</title>
+<title>Bone Hoodie — TBX</title>
+<meta name="description" content="TBX Bone hoodie — soft natural sand with tonal cursive embroidery. Oversized fit, 450 GSM brushed cotton fleece. $69.99." />
+<link rel="canonical" href="https://www.tbxtakeaction.com/product.html?product=bone" id="canonicalLink" />
+<meta property="og:type" content="product" />
+<meta property="og:title" content="Bone Hoodie — TBX" id="ogTitle" />
+<meta property="og:description" content="Soft natural sand with tonal cursive embroidery. Oversized fit, 450 GSM brushed cotton fleece." id="ogDesc" />
+<meta property="og:image" content="https://www.tbxtakeaction.com/assets/bone-front.jpeg" id="ogImage" />
+<meta property="og:url" content="https://www.tbxtakeaction.com/product.html?product=bone" id="ogUrl" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json" id="productLd">
+{"@context":"https://schema.org","@type":"Product","name":"Bone Hoodie","description":"Soft natural sand with tonal cursive embroidery. Oversized fit, 450 GSM brushed cotton fleece.","image":"https://www.tbxtakeaction.com/assets/bone-front.jpeg","brand":{"@type":"Brand","name":"TBX"},"offers":{"@type":"Offer","priceCurrency":"USD","price":"69.99","availability":"https://schema.org/InStock","url":"https://www.tbxtakeaction.com/product.html?product=bone"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"42"}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -49,6 +60,9 @@
           <button id="qPlus" aria-label="Increase" data-cur><svg><use href="#i-plus"/></svg></button>
         </div>
         <button class="pdpadd" id="addBtn" data-add="bone" data-cur>Add To Cart <svg class="ar" width="16" height="16"><use href="#i-arr"/></svg></button>
+        <button class="pdpwish" id="wishBtn" data-cur aria-label="Add to wishlist">
+          <svg><use href="#i-star-o"/></svg>
+        </button>
       </div>
 
       <div class="pdpperks">
@@ -83,7 +97,7 @@
 
 <!-- REVIEWS -->
 <section class="reviews pad" id="reviews">
-  <div class="eyebrow reveal">CUSTOMER REVIEWS</div>
+  <h2 class="eyebrow reveal">CUSTOMER REVIEWS</h2>
   <div class="rvhead reveal d1">
     <div class="rvscore">
       <span class="big">4.8</span>
@@ -125,7 +139,11 @@
 </section>
 
 <script src="tbx-core.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="tbx-stripe.js"></script>
 <script src="tbx-shopify.js"></script>
+<script src="supabase-js.min.js"></script>
+<script src="tbx-supabase.js"></script>
 <script src="tbx-account.js"></script>
 <script>
 const T=window.TBX.TONES, byKey=window.TBX.toneByKey;
@@ -159,7 +177,19 @@ const REVIEWS={
 function starsHTML(r,total){total=total||5;let s='';for(let i=1;i<=total;i++)s+=`<svg><use href="#i-${i<=r?'star':'star-o'}"/></svg>`;return s;}
 
 /* ===== RENDER PDP ===== */
-document.title=tone.name+' — TBX';
+document.title=tone.name+' Hoodie — TBX';
+(function syncHeadMeta(){
+  const desc=tone.desc+' Oversized fit, 450 GSM brushed cotton fleece.';
+  const url='https://www.tbxtakeaction.com/product.html?product='+tone.key;
+  document.querySelector('meta[name="description"]').setAttribute('content',desc);
+  document.getElementById('canonicalLink').setAttribute('href',url);
+  document.getElementById('ogTitle').setAttribute('content',tone.name+' Hoodie — TBX');
+  document.getElementById('ogDesc').setAttribute('content',desc);
+  document.getElementById('ogImage').setAttribute('content','https://www.tbxtakeaction.com/'+tone.front);
+  document.getElementById('ogUrl').setAttribute('content',url);
+  const ld={"@context":"https://schema.org","@type":"Product","name":tone.name+' Hoodie',"description":desc,"image":'https://www.tbxtakeaction.com/'+tone.front,"brand":{"@type":"Brand","name":"TBX"},"offers":{"@type":"Offer","priceCurrency":"USD","price":String(window.TBX.PRICE),"availability":"https://schema.org/InStock","url":url},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"42"}};
+  document.getElementById('productLd').textContent=JSON.stringify(ld);
+})();
 document.getElementById('crumbName').textContent=tone.name;
 document.getElementById('ptone').textContent=tone.code;
 document.getElementById('pname').textContent=tone.name;
@@ -174,7 +204,7 @@ document.getElementById('rvBigStars').innerHTML=starsHTML(5);
 const imgs=[{src:tone.front,tag:'FRONT'},{src:tone.back,tag:'BACK'},{src:tone.tight,tag:'DETAIL'}];
 const gmain=document.getElementById('gmain'),gthumbs=document.getElementById('gthumbs'),gtag=document.getElementById('gtag');
 imgs.forEach((im,i)=>{const el=document.createElement('img');el.src=im.src;el.alt=tone.name+' '+im.tag;if(i===0)el.classList.add('on');gmain.appendChild(el);});
-gthumbs.innerHTML=imgs.map((im,i)=>`<img class="gthumb${i===0?' on':''}" src="${im.src}" alt="${im.tag}" data-i="${i}" data-cur />`).join('');
+gthumbs.innerHTML=imgs.map((im,i)=>`<img class="gthumb${i===0?' on':''}" src="${im.src}" alt="${tone.name} ${im.tag}" data-i="${i}" data-cur />`).join('');
 function showImg(i){gmain.querySelectorAll('img').forEach((el,j)=>el.classList.toggle('on',j===i));document.querySelectorAll('.gthumb').forEach((el,j)=>el.classList.toggle('on',j===i));gtag.textContent=imgs[i].tag;}
 gthumbs.addEventListener('click',e=>{const th=e.target.closest('.gthumb');if(th)showImg(+th.dataset.i);});
 
@@ -187,6 +217,17 @@ document.getElementById('qPlus').addEventListener('click',()=>{qn++;qnEl.textCon
 document.getElementById('qMinus').addEventListener('click',()=>{if(qn>1){qn--;qnEl.textContent=qn;}});
 document.getElementById('sizeGuide').addEventListener('click',()=>window.TBX.showToast('S · M · L — fits oversized, size down for a closer cut'));
 
+/* wishlist */
+const wishBtn=document.getElementById('wishBtn');
+function syncWishBtn(){
+  const on=window.TBX.isWishlisted(tone.key);
+  wishBtn.classList.toggle('on',on);
+  wishBtn.setAttribute('aria-label',(on?'Remove from':'Add to')+' wishlist');
+  wishBtn.querySelector('use').setAttribute('href',on?'#i-star':'#i-star-o');
+}
+syncWishBtn();
+wishBtn.addEventListener('click',()=>{window.TBX.toggleWishlist(tone.key);syncWishBtn();});
+
 /* ===== REVIEWS ===== */
 const rev=REVIEWS[key]||REVIEWS.bone;
 document.getElementById('rvCount').textContent='Based on '+rev.length+' verified reviews';
@@ -195,7 +236,7 @@ function renderReviews(){
   document.getElementById('rvlist').innerHTML=rev.map(r=>`
     <div class="rv">
       <div class="rvwho"><b>${r.n}</b><span class="vf"><svg><use href="#i-check"/></svg> Verified buyer</span><div class="rvdate">${r.d} · Size ${r.size}</div></div>
-      <div class="rvbody"><span class="starrow">${starsHTML(r.r)}</span><h4>${r.t}</h4><p>${r.b}</p></div>
+      <div class="rvbody"><span class="starrow">${starsHTML(r.r)}</span><h3>${r.t}</h3><p>${r.b}</p></div>
     </div>`).join('');
 }
 renderReviews();
