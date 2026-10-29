@@ -118,8 +118,12 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   ok("mode switch with camera flight", (await get("s.mode")) === "life" && await p.evaluate(() => window.__debug.camera.position.distanceTo(window.__debug.player.pos) < 7));
   await tp(-5, 9, Math.PI / 2); await sleep(500); let a = await ppos(); await hold(["w"], 2500); let bpos = await ppos(); const walk = bpos.x - a.x;
   ok("W walks forward", walk > .5, `${walk.toFixed(2)} m`);
-  await tp(-5, 9, Math.PI / 2); await sleep(500); a = await ppos(); await hold(["Shift", "w"], 2500); bpos = await ppos(); const run = bpos.x - a.x;
-  ok("Shift runs faster", run > walk * 1.4, `${run.toFixed(2)} m vs ${walk.toFixed(2)} m`);
+  // speed, not distance: the frame rate (and so the distance covered in a fixed time) varies a lot in a software renderer
+  const speedWhile = async keys => { await tp(-5, 9, Math.PI / 2); await sleep(400); for (const k of keys) await p.keyboard.down(k); await sleep(1200);
+    let v = 0; for (let i = 0; i < 4; i++) { v = Math.max(v, await p.evaluate(() => Math.hypot(window.__debug.player.vel.x, window.__debug.player.vel.z))); await sleep(200); }
+    for (const k of [...keys].reverse()) await p.keyboard.up(k); await sleep(300); return v; };
+  const vWalk = await speedWhile(["w"]), vRun = await speedWhile(["Shift", "w"]);
+  ok("Shift runs faster", vRun > vWalk * 1.6, `${vRun.toFixed(1)} m/s vs ${vWalk.toFixed(1)} m/s walking`);
   await tp(-5, 9, Math.PI / 2); await sleep(400); a = await ppos(); await hold(["d"], 1800); bpos = await ppos(); ok("A/D strafe sideways", Math.abs(bpos.z - a.z) > .3, `dz ${(bpos.z - a.z).toFixed(2)}`);
   await tp(-3, 7, Math.PI); await sleep(400); await p.keyboard.press("Space", { delay: 20 }); let maxY = 0; for (let i = 0; i < 12; i++) { maxY = Math.max(maxY, (await ppos()).y); await sleep(150); }
   ok("Space jumps", maxY > .4, `peak ${maxY.toFixed(2)} m`);
