@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useIsPresent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { AGENT_IDS, AGENTS, STATUS_COLOR } from "../data/agents";
 import { detectLang } from "../sim/dialogue";
@@ -8,11 +8,14 @@ import { AgentDot, Icon, Progress, StatusPill } from "./common";
 import { MessageRow } from "./RightPanel";
 import { canListen, canSpeak, listen, speak } from "./voice";
 
-const Backdrop = ({ onClose, children }: { onClose: () => void; children: React.ReactNode }) => (
-  <motion.div className="pointer-events-auto fixed inset-0 z-40 flex items-end justify-center bg-black/50 p-3 backdrop-blur-sm sm:items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
-    <motion.div initial={{ y: 30, scale: .97 }} animate={{ y: 0, scale: 1 }} exit={{ y: 30, scale: .97 }} transition={{ type: "spring", damping: 24, stiffness: 300 }} className="w-full">{children}</motion.div>
-  </motion.div>
-);
+const Backdrop = ({ onClose, children }: { onClose: () => void; children: React.ReactNode }) => {
+  const present = useIsPresent();   // while it fades out, clicks go through to the office behind it
+  return (
+    <motion.div className={`${present ? "pointer-events-auto" : "pointer-events-none"} fixed inset-0 z-40 flex items-end justify-center bg-black/50 p-3 backdrop-blur-sm sm:items-center`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <motion.div initial={{ y: 30, scale: .97 }} animate={{ y: 0, scale: 1 }} exit={{ y: 30, scale: .97 }} transition={{ type: "spring", damping: 24, stiffness: 300 }} className="w-full">{children}</motion.div>
+    </motion.div>
+  );
+};
 
 /** talk to an agent: text always works; voice when the browser allows it */
 function ChatWindow({ id }: { id: AgentId }) {

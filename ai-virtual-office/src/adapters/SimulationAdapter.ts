@@ -58,7 +58,8 @@ export class SimulationAdapter implements AgentAdapter {
 
   private walk(id: AgentId, to: Place): number {
     const a = this.agents[id];
-    if (a.move) { this.pending[id] = to; return a.move.startT + a.move.duration; }
+    // already walking: go on from where this walk ends, and report when the second leg arrives
+    if (a.move) { this.pending[id] = to; return a.move.startT + a.move.duration + pathLength(placePath(a.move.to, to)) / WALK_SPEED; }
     const path = placePath(a.place, to), len = pathLength(path);
     if (len < .05) { this.patch(id, { place: to }); return this.t; }
     const duration = len / WALK_SPEED;
@@ -107,8 +108,10 @@ export class SimulationAdapter implements AgentAdapter {
     this.q.push({ at: ready + .6, fn: () => this.runMeeting() });
   }
 
-  private runMeeting() {
-    if (!this.project) return;
+  private runMeeting(waited = 0) {
+    if (!this.project || this.project.status !== "meeting") return;
+    // the kickoff starts once everyone is sitting at the table (or after 30 s, so a stuck walk can't block it)
+    if (waited < 30 && AGENT_IDS.some(id => this.agents[id].move || this.agents[id].place.kind !== "meeting")) { this.at(.5, () => this.runMeeting(waited + .5)); return; }
     this.tl(this.L("Kickoff uchrashuvi", "Kickoff meeting"), "meeting");
     const lines: [AgentId, string][] = [["manager", this.L(`Hammaga salom! Yangi loyiha: "${this.project.title}". Vazifalarni taqsimlayman.`, `Hi team! New project: "${this.project.title}". Here's who does what.`)]];
     for (const w of WORKERS) {

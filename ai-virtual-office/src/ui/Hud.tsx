@@ -1,10 +1,16 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useIsPresent } from "framer-motion";
 import { useRef } from "react";
 import { AGENTS } from "../data/agents";
 import { useOffice } from "../store/useOffice";
 import { touch } from "../three/touch";
 
 const LABEL: Record<string, string> = { computer: "use the computer", whiteboard: "look at the whiteboard", meeting: "enter the meeting room view", manager: "open the manager office" };
+
+/** the ESC menu's dimmed layer; it lets clicks through as soon as it starts fading out */
+function MenuLayer({ children }: { children: React.ReactNode }) {
+  const present = useIsPresent();
+  return <motion.div className={`${present ? "pointer-events-auto" : "pointer-events-none"} fixed inset-0 z-30 flex items-center justify-center bg-black/45 backdrop-blur-sm`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>{children}</motion.div>;
+}
 
 /** Virtual Life overlay: the "Press E" prompt, crosshair, controls, ESC menu and touch controls */
 export function Hud() {
@@ -29,7 +35,7 @@ export function Hud() {
       )}
       <AnimatePresence>
         {s.menuOpen && !busy && (
-          <motion.div className="pointer-events-auto fixed inset-0 z-30 flex items-center justify-center bg-black/45 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <MenuLayer>
             <div className="w-[300px] rounded-3xl border border-white/10 bg-ink-900/95 p-5 shadow-2xl">
               <div className="mb-3 text-[11px] font-semibold uppercase tracking-[.14em] text-slate-400">Menu</div>
               {[["Resume", () => s.setMenu(false)], [s.cam === "third" ? "Switch to 1st person" : "Switch to 3rd person", () => s.setCam(s.cam === "third" ? "first" : "third")], ["Back to Overview", () => s.setMode("overview")]].map(([l, f]) => (
@@ -37,7 +43,7 @@ export function Hud() {
               ))}
               <p className="mt-2 text-[11px] leading-relaxed text-slate-500">Walk up to an agent and press E to talk. Use computers, the whiteboard, the meeting room and the manager office with E too.</p>
             </div>
-          </motion.div>
+          </MenuLayer>
         )}
       </AnimatePresence>
       {isTouch && !busy && <TouchControls />}

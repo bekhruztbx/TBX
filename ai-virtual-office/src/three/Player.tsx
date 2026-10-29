@@ -12,6 +12,7 @@ import { touch } from "./touch";
 /** shared with the camera rig and the HUD */
 export const player = { pos: new THREE.Vector3(ENTRANCE.x, 0, ENTRANCE.z), vel: new THREE.Vector3(), yaw: Math.PI, pitch: -.12, grounded: true };
 const keys = new Set<string>();
+let jumpPressed = false;   // a quick tap of Space can fall between two frames, so the press itself is remembered
 const R = .32, GRAV = -20, JUMP = 6.4;
 const typing = () => { const el = document.activeElement as HTMLElement | null; return !!el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable); };
 
@@ -41,10 +42,16 @@ export function Player() {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       const s = useOffice.getState();
+      // Esc closes whatever window is open, in either mode (even while typing in it)
+      if (e.code === "Escape" && (s.assignFor || s.chatWith || s.modal)) {
+        if (s.assignFor) s.setAssignFor(null); else if (s.chatWith) s.openChat(null); else s.openModal(null);
+        (document.activeElement as HTMLElement | null)?.blur?.();
+        return;
+      }
       if (typing()) return;
       if (s.mode !== "life") return;
       keys.add(e.code);
-      if (e.code === "Space") e.preventDefault();
+      if (e.code === "Space") { e.preventDefault(); if (!e.repeat) jumpPressed = true; }
       if (e.code === "KeyE") useAct();
       if (e.code === "KeyV") s.setCam(s.cam === "third" ? "first" : "third");
       if (e.code === "Escape" && !document.pointerLockElement && !s.chatWith && !s.modal && !s.assignFor) s.setMenu(!s.menuOpen);
@@ -83,12 +90,18 @@ export function Player() {
       let vx = 0, vz = 0;
       if (len > .05) { const nf = f / Math.max(1, len), nr = r / Math.max(1, len); vx = (fx * nf - fz * nr) * speed; vz = (fz * nf + fx * nr) * speed; }
       player.vel.x += (vx - player.vel.x) * Math.min(1, dt * 12); player.vel.z += (vz - player.vel.z) * Math.min(1, dt * 12);
-      if ((keys.has("Space") || touch.jump) && player.grounded) { player.vel.y = JUMP; player.grounded = false; touch.jump = false; }
+      if ((jumpPressed || keys.has("Space") || touch.jump) && player.grounded) { player.vel.y = JUMP; player.grounded = false; }
+      jumpPressed = false; touch.jump = false;
       if (touch.act) { touch.act = false; useAct(); }
-    } else { player.vel.x *= .8; player.vel.z *= .8; }
+    } else { player.vel.x *= .8; player.vel.z *= .8; jumpPressed = false; }
     player.vel.y += GRAV * dt;
     player.pos.addScaledVector(player.vel, dt);
     if (player.pos.y <= 0) { player.pos.y = 0; player.vel.y = 0; player.grounded = true; }
+    // agents are solid too (walls win, so this runs first)
+    for (const id of AGENT_IDS) {
+      const a = agentPos(id), dx = player.pos.x - a.x, dz = player.pos.z - a.z, d = Math.hypot(dx, dz), min = R + .3;
+      if (d < min && d > 1e-4) { player.pos.x += (dx / d) * (min - d); player.pos.z += (dz / d) * (min - d); }
+    }
     collide(player.pos);
     group.current.position.copy(player.pos);
     const hs = Math.hypot(player.vel.x, player.vel.z);

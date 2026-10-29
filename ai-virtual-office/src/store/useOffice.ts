@@ -38,6 +38,7 @@ interface OfficeState {
 }
 
 const cap = <T,>(arr: T[], n: number) => (arr.length > n ? arr.slice(arr.length - n) : arr);
+const narrow = () => typeof window !== "undefined" && window.innerWidth < 760;
 let lineN = 0;
 
 export const useOffice = create<OfficeState>()((set, get) => ({
@@ -82,7 +83,7 @@ export const useOffice = create<OfficeState>()((set, get) => ({
     const answer = (await get().adapter?.ask(agent, text)) ?? "";
     set({ typing: null }); add(agent, answer);
   },
-  select(agent, tab) { set({ selected: agent, tab: tab ?? get().tab, ...(agent ? { rightOpen: true, focus: { id: agent, n: (get().focus?.n ?? 0) + 1 } } : {}) }); },
+  select(agent, tab) { set({ selected: agent, tab: tab ?? get().tab, ...(agent ? { rightOpen: true, ...(narrow() ? { leftOpen: false } : {}), focus: { id: agent, n: (get().focus?.n ?? 0) + 1 } } : {}) }); },
   setMode(m) { if (m !== get().mode) set({ mode: m, modeChangedAt: performance.now(), menuOpen: false, nearby: null, ...(m === "life" ? { leftOpen: false } : {}) }); },
   setCam(c) { set({ cam: c }); },
   setSpeed(x) { get().adapter?.setSpeed(x); set({ speed: x }); },
@@ -93,7 +94,9 @@ export const useOffice = create<OfficeState>()((set, get) => ({
   setNearby(n) { const c = get().nearby; if ((c?.kind ?? null) !== (n?.kind ?? null) || c?.id !== n?.id) set({ nearby: n }); },
   openModal(m) { set({ modal: m }); if (m && document.pointerLockElement) document.exitPointerLock(); },
   setMenu(open) { set({ menuOpen: open }); },
-  setLeft(open) { set({ leftOpen: open }); }, setRight(open) { set({ rightOpen: open }); },
+  // on a phone the two side panels don't fit next to each other, so opening one closes the other
+  setLeft(open) { set({ leftOpen: open, ...(open && narrow() ? { rightOpen: false } : {}) }); },
+  setRight(open) { set({ rightOpen: open, ...(open && narrow() ? { leftOpen: false } : {}) }); },
   setAssignFor(a) { set({ assignFor: a }); if (a && document.pointerLockElement) document.exitPointerLock(); },
 }));
 

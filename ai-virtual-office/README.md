@@ -16,6 +16,21 @@ npm run preview    # serve the build on http://localhost:4173
 
 You need Node 18+ and a browser with WebGL.
 
+### Automated check
+
+`tests/e2e.cjs` drives the running app in Chromium with real clicks and key presses. It covers:
+- the dashboard, starting a project, the meeting and completion;
+- clicking agents, computers, the whiteboard and the rooms;
+- every agent-panel action and chat in Uzbek and English;
+- Virtual Life: walking, running, jumping, collisions, "Press E", the Esc menu and both cameras;
+- the phone layout.
+
+```bash
+npm i -D playwright && npx playwright install chromium   # once
+npm run build && npm run preview                          # terminal 1
+node tests/e2e.cjs                                        # terminal 2: prints PASS/FAIL per check, screenshots in test-results/
+```
+
 ## What you can do
 
 **Overview mode**
@@ -54,9 +69,9 @@ You need Node 18+ and a browser with WebGL.
 | Mouse | look (click the scene to capture the mouse) |
 | E | talk to the agent in front of you, or use a computer, the whiteboard, the meeting room or the manager office |
 | V | switch between 3rd and 1st person |
-| Esc | menu |
+| Esc | close the open chat or window; otherwise open the menu (and free the mouse) |
 
-- Walls and furniture block you. You can jump over low furniture.
+- Walls, furniture and agents block you. You can jump over low furniture.
 - On touch screens you get a joystick, a look area, and Run, Jump and E buttons.
 
 **Chat and voice**
@@ -102,5 +117,5 @@ It talks to a small local bridge over WebSocket. Open the app with `?adapter=cla
 
 ## Known limits of the demo
 - Agent replies are rules over the simulated state, not a language model.
-- Agents walk through each other (there is no crowd avoidance), and you walk through agents.
+- Agents walk through each other (there is no crowd avoidance). You can't walk through them.
 - Voice input depends on the browser: Chrome and Edge support it, Firefox does not. Embedded previews may block the microphone.

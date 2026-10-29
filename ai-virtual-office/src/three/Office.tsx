@@ -201,7 +201,7 @@ export function Office() {
       {/* reception + sign */}
       <RoundedBox args={[3.4, 1, 1.6]} radius={.15} position={[-14.2, .5, 8.4]} castShadow receiveShadow><meshStandardMaterial color="#e9e4dc" roughness={.5} /></RoundedBox>
       <mesh position={[-14.2, 2.1, BOUNDS.maxZ - .02]} rotation-y={Math.PI}><planeGeometry args={[3.6, .9]} /><meshBasicMaterial map={tex.sign} toneMapped={false} /></mesh>
-      <mesh position={[0, 2.35, BOUNDS.minZ + .02]}><planeGeometry args={[4.8, 1.2]} /><meshBasicMaterial map={tex.sign} toneMapped={false} transparent opacity={.92} /></mesh>
+      <mesh position={[0, 2.35, BOUNDS.minZ + .12]}><planeGeometry args={[4.8, 1.2]} /><meshBasicMaterial map={tex.sign} toneMapped={false} transparent opacity={.92} /></mesh>
     </group>
   );
 }
