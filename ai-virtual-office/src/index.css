@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body, #root { height: 100%; margin: 0; background: #07080c; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+body { overflow: hidden; overscroll-behavior: none; }
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.15) transparent; }
+canvas { touch-action: none; }
